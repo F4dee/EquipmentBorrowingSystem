@@ -7,10 +7,49 @@ export default function Register() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+    const [passwordStrength, setPasswordStrength] = useState(0)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
+
+    const checkPasswordStrength = (pass) => {
+        let strength = 0;
+        if (pass.length === 0) return 0;
+        if (pass.length >= 6) strength += 1;
+        if (pass.length >= 8) strength += 1;
+        if (/[A-Z]/.test(pass) && /[a-z]/.test(pass)) strength += 1;
+        if (/[0-9]/.test(pass) || /[^A-Za-z0-9]/.test(pass)) strength += 1;
+        return Math.min(4, strength); // Max 4 points
+    }
+
+    const handlePasswordChange = (e) => {
+        const val = e.target.value;
+        setPassword(val);
+        setPasswordStrength(checkPasswordStrength(val));
+    }
+
+    const getStrengthLabel = () => {
+        switch (passwordStrength) {
+            case 0: return '';
+            case 1: return 'Weak';
+            case 2: return 'Fair';
+            case 3: return 'Good';
+            case 4: return 'Strong';
+            default: return '';
+        }
+    }
+
+    const getStrengthClass = (level) => {
+        if (passwordStrength === 0) return 'strength-bar';
+        if (passwordStrength >= level) {
+            if (passwordStrength <= 1) return 'strength-bar strength-weak'; // Red
+            if (passwordStrength === 2) return 'strength-bar strength-fair'; // Orange/Yellow
+            return 'strength-bar strength-strong'; // Green
+        }
+        return 'strength-bar';
+    }
 
     const handleRegister = async (e) => {
         e.preventDefault()
@@ -69,16 +108,22 @@ export default function Register() {
                         <label className="form-label">Password</label>
                         <div className="input-icon-wrapper">
                             <i className="ph ph-lock-key"></i>
-                            <input type="password" className="form-input" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
-                            <i className="ph ph-eye" style={{ left: 'auto', right: '12px', cursor: 'pointer' }}></i>
+                            <input type={showPassword ? "text" : "password"} className="form-input" placeholder="Create a password" value={password} onChange={handlePasswordChange} required minLength={6} />
+                            <i className={showPassword ? "ph ph-eye-slash" : "ph ph-eye"} style={{ left: 'auto', right: '12px', cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}></i>
                         </div>
-                        <div className="password-strength">
-                            <div className="strength-bar strength-weak"></div>
-                            <div className="strength-bar strength-weak"></div>
-                            <div className="strength-bar"></div>
-                            <div className="strength-bar"></div>
-                            <span className="strength-text">Weak</span>
-                        </div>
+                        {password.length > 0 && (
+                            <div className="password-strength">
+                                <div className={getStrengthClass(1)}></div>
+                                <div className={getStrengthClass(2)}></div>
+                                <div className={getStrengthClass(3)}></div>
+                                <div className={getStrengthClass(4)}></div>
+                                <span className="strength-text" style={{
+                                    color: passwordStrength <= 2 ? (passwordStrength === 1 ? 'var(--error-red)' : '#f59e0b') : 'var(--success-green)'
+                                }}>
+                                    {getStrengthLabel()}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <div className="form-group">
                         <label className="form-label">Confirm Password</label>
@@ -90,22 +135,13 @@ export default function Register() {
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
                         <input type="checkbox" id="terms" style={{ width: '16px', height: '16px', borderRadius: '4px', border: '1px solid var(--border-color)', cursor: 'pointer' }} required />
-                        <label htmlFor="terms" style={{ fontSize: '14px', color: 'var(--text-secondary)', cursor: 'pointer' }}>I agree to the <a href="#" style={{ color: 'var(--primary-blue)', textDecoration: 'none' }}>Terms & Conditions</a></label>
+                        <label htmlFor="terms" style={{ fontSize: '14px', color: 'var(--text-secondary)', cursor: 'pointer' }}>I agree to the <a href="#" onClick={(e) => { e.preventDefault(); alert('Terms and Conditions:\n\n1. Use equipment responsibly.\n2. Return items on time.\n3. Report any damages immediately.'); }} style={{ color: 'var(--primary-blue)', textDecoration: 'none' }}>Terms & Conditions</a></label>
                     </div>
 
                     <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '12px', fontSize: '16px', justifyContent: 'center' }} disabled={isLoading}>
                         {isLoading ? 'Registering...' : 'Register'}
                     </button>
                 </form>
-
-                <div className="auth-divider">
-                    <span>Or continue with</span>
-                </div>
-
-                <button className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', padding: '12px' }}>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" style={{ width: '20px', height: '20px' }} />
-                    Google
-                </button>
 
                 <p style={{ textAlign: 'center', marginTop: '32px', fontSize: '14px', color: 'var(--text-secondary)' }}>
                     Already have an account? <Link to="/login" style={{ color: 'var(--primary-blue)', fontWeight: 600, textDecoration: 'none' }}>Login here</Link>

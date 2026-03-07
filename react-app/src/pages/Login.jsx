@@ -83,35 +83,10 @@ export default function Login({ onLogin }) {
                     </button>
                 </form>
 
-                <div className="auth-divider" style={{ display: 'flex', alignItems: 'center', textAlign: 'center', color: 'var(--text-muted)', margin: '24px 0', fontSize: '12px', textTransform: 'uppercase' }}>
-                    <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }}></div>
-                    <span style={{ padding: '0 16px' }}>OR</span>
-                    <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }}></div>
-                </div>
-
-                <button className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', padding: '12px', border: '1px solid var(--text-primary)', color: 'var(--text-primary)', fontWeight: 600 }}>
-                    <div style={{ width: '16px', height: '16px', backgroundColor: 'var(--border-color)', marginRight: '8px' }}></div>
-                    Sign in with Google
-                </button>
-
                 <p style={{ textAlign: 'center', marginTop: '32px', fontSize: '14px', color: 'var(--text-secondary)' }}>
                     Don't have an account? <Link to="/register" style={{ color: 'var(--text-primary)', fontWeight: 600, textDecoration: 'underline' }}>Sign Up</Link>
                 </p>
 
-                {/* Demo buttons */}
-                <div style={{ marginTop: '24px', display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                    <button type="button" onClick={handleDemoStudent} className="btn btn-outline" style={{ fontSize: '11px', padding: '4px 8px' }}>Demo Student</button>
-                    <button type="button" onClick={handleDemoAdmin} className="btn btn-outline" style={{ fontSize: '11px', padding: '4px 8px' }}>Demo Admin</button>
-                </div>
-            </div>
-
-            <div className="quick-nav-box">
-                <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '8px' }}>Quick Navigation:</p>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                    <Link to="/catalog" style={{ fontSize: '13px', color: 'var(--text-primary)', textDecoration: 'underline' }}>Catalog</Link>
-                    <Link to="/admin" style={{ fontSize: '13px', color: 'var(--text-primary)', textDecoration: 'underline' }}>Admin</Link>
-                    <Link to="/profile" style={{ fontSize: '13px', color: 'var(--text-primary)', textDecoration: 'underline' }}>Profile</Link>
-                </div>
             </div>
         </div>
     )
