@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Borrowing System</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="ph-fill ph-hexagon"></i>
+                    <div class="logo-text">
+                        <span class="logo-title">EQUIPMENT</span>
+                        <span class="logo-subtitle">BORROWING SYSTEM</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link active" data-page="home">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-house"></i>
+                                    <span>Home</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#register" class="nav-link" data-page="register">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-pencil-simple"></i>
+                                    <span>Register</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#catalog" class="nav-link" data-page="catalog">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-list-dashes"></i>
+                                    <span>Catalog</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#cart" class="nav-link" data-page="cart">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-shopping-cart"></i>
+                                    <span>Cart</span>
+                                </div>
+                                <span class="badge badge-accent cart-count">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#requests" class="nav-link" data-page="requests">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-package"></i>
+                                    <span>Requests</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#report" class="nav-link" data-page="report">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-warning-circle"></i>
+                                    <span>Report</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="collapse-trigger" id="adminToggle">
+                        <a href="#admin" class="nav-link has-submenu" data-page="admin">
+                            <div class="nav-link-left">
+                                <i class="ph ph-shield-star"></i>
+                                <span>Admin</span>
+                            </div>
+                            <i class="ph ph-caret-down submenu-icon"></i>
+                        </a>
+                    </div>
+                    <ul class="nav-list submenu" id="adminSubmenu">
+                        <li class="nav-item">
+                            <a href="#admin-inventory" class="nav-link submenu-link" data-page="admin-inventory">
+                                <span>Admin/Inventory</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#profile" class="nav-link" data-page="profile">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-user"></i>
+                                    <span>Profile</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#settings" class="nav-link" data-page="settings">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-gear"></i>
+                                    <span>Settings</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section recent-pages">
+                    <h3 class="nav-title">Recent Pages:</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#item-4" class="nav-link recent-link" data-page="item-4">
+                                <div class="nav-link-left">
+                                    <i class="ph ph-caret-right"></i>
+                                    <span>item/4</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <button class="add-pages-btn">
+                        <i class="ph ph-plus"></i>
+                        <span>Add Pages</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Views -->
+            <div id="page-home" class="page-view active">
+                <header class="dashboard-header">
+                    <div class="welcome-text">
+                        <h1 class="page-title" style="margin-bottom:0;">Good afternoon, John Nathaniel</h1>
+                        <p class="page-subtitle" id="current-date">Mar 2, 2026</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="icon-btn"><i class="ph ph-bell"></i></button>
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=John+Munalem&background=2563EB&color=fff"
+                                alt="User Avatar">
+                        </div>
+                    </div>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <p class="stat-label">Active Requests</p>
+                        <h2 class="stat-value">32</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Completed Today</p>
+                        <h2 class="stat-value">15</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Open Tickets</p>
+                        <h2 class="stat-value">8</h2>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card list-card">
+                        <div class="card-header-inner">
+                            <h3 class="card-title">Recent Requests</h3>
+                            <a href="#requests" class="view-all">View All</a>
+                        </div>
+                        <div class="list-container">
+                            <div class="list-item">
+                                <div class="item-main">
+                                    <span class="item-id">REQ-045 <span
+                                            style="font-weight:normal; color:#6B7280; font-size:13px; margin-left:8px;">●
+                                            John Smith</span></span>
+                                    <span class="item-desc">2 items borrowed</span>
+                                    <span class="item-meta">Feb 28, 2026</span>
+                                </div>
+                                <div class="status-badge badge-pending">PENDING</div>
+                            </div>
+                            <div class="list-item">
+                                <div class="item-main">
+                                    <span class="item-id">REQ-044 <span
+                                            style="font-weight:normal; color:#6B7280; font-size:13px; margin-left:8px;">●
+                                            Sarah Johnson</span></span>
+                                    <span class="item-desc">1 item borrowed</span>
+                                    <span class="item-meta">Feb 28, 2026</span>
+                                </div>
+                                <div class="status-badge badge-approved">APPROVED</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card list-card" style="margin-top:24px;">
+                        <div class="card-header-inner">
+                            <h3 class="card-title">Recent Tickets</h3>
+                            <a href="#report" class="view-all">View All</a>
+                        </div>
+                        <div class="list-container">
+                            <div class="list-item">
+                                <div class="item-main">
+                                    <span class="item-id">TKT-128 <span class="status-badge badge-open"
+                                            style="margin-left:8px; padding:2px 8px; font-size:10px;">HIGH</span></span>
+                                    <span class="item-desc">Laptop won't power on</span>
+                                    <span class="item-meta">Lab 1 - PC-042</span>
+                                </div>
+                                <div style="font-size:13px; font-weight:600; color:var(--text-secondary);">Status: OPEN
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div class="item-main">
+                                    <span class="item-id">TKT-127 <span class="status-badge badge-progress"
+                                            style="margin-left:8px; padding:2px 8px; font-size:10px;">MEDIUM</span></span>
+                                    <span class="item-desc">Broken HDMI port</span>
+                                    <span class="item-meta">Building A - EQ-015</span>
+                                </div>
+                                <div style="font-size:13px; font-weight:600; color:var(--primary-blue);">Status: IN
+                                    PROGRESS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-register" class="page-view">
+                <div class="auth-container card">
+                    <h1 class="page-title" style="text-align:center; font-size:28px; margin-bottom:32px;">Create New
+                        Account</h1>
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <div class="input-icon-wrapper">
+                                <i class="ph ph-user"></i>
+                                <input type="text" class="form-input" placeholder="e.g. John Doe">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Student ID</label>
+                            <div class="input-icon-wrapper">
+                                <i class="ph ph-identification-card"></i>
+                                <input type="text" class="form-input" placeholder="XX-XXXX-XXX">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CIT-U Email</label>
+                            <div class="input-icon-wrapper">
+                                <i class="ph ph-envelope-simple"></i>
+                                <input type="email" class="form-input" placeholder="username@cit.edu">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="input-icon-wrapper">
+                                <i class="ph ph-lock-key"></i>
+                                <input type="password" class="form-input" placeholder="Create a strong password">
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-bar active"></div>
+                                <div class="strength-bar active"></div>
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="input-icon-wrapper">
+                                <i class="ph ph-lock-key"></i>
+                                <input type="password" class="form-input" placeholder="Repeat your password">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top:24px;">
+                            <label class="checkbox-label">
+                                <input type="checkbox" style="margin-top:2px; accent-color:var(--primary-blue);"
+                                    required>
+                                <span>I agree to the Terms & Conditions and the Equipment Liability Policy.</span>
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block"
+                            style="padding:14px; font-size:16px;">Register</button>
+
+                        <div class="divider">or continue with</div>
+
+                        <button type="button" class="btn btn-outline btn-block"
+                            style="padding:12px; color:var(--text-primary); border-color:var(--border-color);">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                                alt="Google" style="width:20px;">
+                            Google
+                        </button>
+
+                        <p style="text-align:center; margin-top:32px; font-size:14px; color:var(--text-secondary);">
+                            Already have an account? <a href="#"
+                                style="color:var(--primary-blue); font-weight:500; text-decoration:none;">Login here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <div id="page-catalog" class="page-view">
+                <div class="catalog-header">
+                    <div class="catalog-top">
+                        <h1 class="page-title" style="margin-bottom:0;">Equipment Catalog</h1>
+                        <div class="catalog-actions">
+                            <div class="search-wrapper">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" class="search-input" placeholder="Search equipment...">
+                                <i class="ph ph-faders" style="left:auto; right:12px; cursor:pointer;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filters">
+                        <button class="filter-chip active">All</button>
+                        <button class="filter-chip">Routers</button>
+                        <button class="filter-chip">Switches</button>
+                        <button class="filter-chip">VR Headsets</button>
+                        <button class="filter-chip">Hubs</button>
+                        <button class="filter-chip">Bridges</button>
+                        <button class="filter-chip">NICs</button>
+                        <div style="flex:1;"></div>
+                        <label class="availability-toggle">
+                            <input type="checkbox" style="width:16px; height:16px; accent-color:var(--primary-blue);">
+                            Show available only
+                        </label>
+                    </div>
+                </div>
+
+                <div class="equipment-grid">
+                    <div class="card equipment-card" style="padding:0; overflow:hidden;">
+                        <div class="ec-image"><i class="ph ph-router"></i></div>
+                        <div class="ec-content">
+                            <h3 class="ec-title">Router TP-Link</h3>
+                            <p class="ec-availability">Available: 5</p>
+                            <button class="btn btn-primary btn-block">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="card equipment-card" style="padding:0; overflow:hidden;">
+                        <div class="ec-image"><i class="ph ph-hard-drives"></i></div>
+                        <div class="ec-content">
+                            <h3 class="ec-title">Switch Cisco</h3>
+                            <p class="ec-availability">Available: 2</p>
+                            <button class="btn btn-primary btn-block">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="card equipment-card" style="padding:0; overflow:hidden;">
+                        <div class="ec-image"><i class="ph ph-virtual-reality"></i></div>
+                        <div class="ec-content">
+                            <h3 class="ec-title">VR Headset</h3>
+                            <p class="ec-availability">Available: 3</p>
+                            <button class="btn btn-primary btn-block">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="card equipment-card" style="padding:0; overflow:hidden;">
+                        <div class="ec-image"><i class="ph ph-plugs"></i></div>
+                        <div class="ec-content">
+                            <h3 class="ec-title">Network Hub</h3>
+                            <p class="ec-availability out">Available: 0</p>
+                            <button class="btn btn-disabled btn-block" disabled>Out of Stock</button>
+                        </div>
+                    </div>
+                    <div class="card equipment-card" style="padding:0; overflow:hidden;">
+                        <div class="ec-image"><i class="ph ph-broadcast"></i></div>
+                        <div class="ec-content">
+                            <h3 class="ec-title">Bridge</h3>
+                            <p class="ec-availability">Available: 4</p>
+                            <button class="btn btn-primary btn-block">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="card equipment-card" style="padding:0; overflow:hidden;">
+                        <div class="ec-image"><i class="ph ph-computer-tower"></i></div>
+                        <div class="ec-content">
+                            <h3 class="ec-title">NIC Card</h3>
+                            <p class="ec-availability">Available: 10</p>
+                            <button class="btn btn-primary btn-block">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button class="page-btn text-btn" disabled>Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"
+                        style="border:none;pointer-events:none;background:transparent;">...</button>
+                    <button class="page-btn">5</button>
+                    <button class="page-btn text-btn">Next</button>
+                </div>
+            </div>
+
+            <div id="page-item-4" class="page-view">
+                <a href="#catalog" class="btn btn-outline" style="border:none; padding:10px 0; margin-bottom:24px;"
+                    data-page="catalog">
+                    <i class="ph ph-arrow-left"></i> Back to Catalog
+                </a>
+                <div class="item-layout">
+                    <div class="item-gallery">
+                        <div class="main-img"><i class="ph ph-router"></i></div>
+                        <div class="thumbnails">
+                            <div class="thumb active"
+                                style="display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--primary-blue);">
+                                <i class="ph ph-router"></i>
+                            </div>
+                            <div class="thumb"
+                                style="display:flex;align-items:center;justify-content:center;font-size:32px;color:#CBD5E1;">
+                                <i class="ph ph-plugs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-category">Router</div>
+                        <h1 class="item-name">Router TP-Link Archer C7</h1>
+                        <div class="status-badge badge-success" style="margin-bottom:24px;">In Stock (5 Available)</div>
+
+                        <p class="item-description">
+                            The Archer C7 is a fast 802.11ac router with incredible range. It's better than many routers
+                            that are twice as expensive. This advanced Wi-Fi is designed for high-traffic online
+                            activities and can help to run applications at triple the speed of the previous 802.11n
+                            standard.
+                        </p>
+
+                        <h3 style="font-size:16px; margin-bottom:12px;">Technical Specifications</h3>
+                        <table class="specs-table">
+                            <tr>
+                                <th>Wi-Fi Speed</th>
+                                <td>AC1750 (1300Mbps + 450Mbps)</td>
+                            </tr>
+                            <tr>
+                                <th>Ports</th>
+                                <td>4 Gigabit LAN, 1 Gigabit WAN, 2 USB 2.0</td>
+                            </tr>
+                            <tr>
+                                <th>Antennas</th>
+                                <td>3 dual band detachable antennas</td>
+                            </tr>
+                        </table>
+
+                        <div class="borrow-controls">
+                            <div class="form-group" style="margin:0;">
+                                <label class="form-label">Borrow Date</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ph ph-calendar"></i>
+                                    <input type="date" class="form-input" value="2026-02-28">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:0;">
+                                <label class="form-label">Return Date</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ph ph-calendar-check"></i>
+                                    <input type="date" class="form-input" value="2026-03-05">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="add-actions">
+                            <div class="qty-selector">
+                                <button class="qty-btn"><i class="ph ph-minus"></i></button>
+                                <input type="number" class="qty-input" value="1" min="1" max="5">
+                                <button class="qty-btn"><i class="ph ph-plus"></i></button>
+                            </div>
+                            <button class="btn btn-primary"
+                                style="flex:1; padding:12px 24px; font-size:16px; height:44px;">
+                                <i class="ph ph-shopping-cart-simple"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-cart" class="page-view">
+                <h1 class="page-title">Your Borrowing Cart</h1>
+                <div class="cart-layout">
+                    <div class="cart-table-card">
+                        <table class="data-table" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th style="width:80px; text-align:center;">Qty</th>
+                                    <th>Dates</th>
+                                    <th style="width:80px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="item-cell">
+                                            <div class="item-cell-icon"><i class="ph ph-router"></i></div>
+                                            <span style="font-weight:500;">Router TP-Link Archer C7</span>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center;">1</td>
+                                    <td>
+                                        <div style="font-size:13px; color:var(--text-secondary);">Feb 28 - Mar 5</div>
+                                        <div style="font-size:12px; color:var(--warning-orange); margin-top:4px;">5 Days
+                                        </div>
+                                    </td>
+                                    <td><button class="btn action-link"
+                                            style="padding:0;background:transparent;border:none;"><i class="ph ph-trash"
+                                                style="font-size:18px;"></i> Remove</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="item-cell">
+                                            <div class="item-cell-icon" style="color:var(--text-primary);"><i
+                                                    class="ph ph-hard-drives"></i></div>
+                                            <span style="font-weight:500;">Switch Cisco SG 110-16</span>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center;">2</td>
+                                    <td>
+                                        <div style="font-size:13px; color:var(--text-secondary);">Feb 28 - Mar 7</div>
+                                        <div style="font-size:12px; color:var(--warning-orange); margin-top:4px;">7 Days
+                                        </div>
+                                    </td>
+                                    <td><button class="btn action-link"
+                                            style="padding:0;background:transparent;border:none;"><i class="ph ph-trash"
+                                                style="font-size:18px;"></i> Remove</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="item-cell">
+                                            <div class="item-cell-icon" style="color:var(--text-primary);"><i
+                                                    class="ph ph-virtual-reality"></i></div>
+                                            <span style="font-weight:500;">Meta Quest 2 VR Headset</span>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center;">1</td>
+                                    <td>
+                                        <div style="font-size:13px; color:var(--text-secondary);">Mar 1 - Mar 3</div>
+                                        <div style="font-size:12px; color:var(--warning-orange); margin-top:4px;">2 Days
+                                        </div>
+                                    </td>
+                                    <td><button class="btn action-link"
+                                            style="padding:0;background:transparent;border:none;"><i class="ph ph-trash"
+                                                style="font-size:18px;"></i> Remove</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3 class="summary-title">Order Summary</h3>
+
+                        <div class="form-group" style="margin-bottom:24px;">
+                            <label class="form-label">Purpose / Reason for borrowing</label>
+                            <textarea class="form-input" rows="4"
+                                placeholder="Briefly describe what you'll use this equipment for..."
+                                style="resize:vertical;"></textarea>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Total Unique Items:</span>
+                            <span style="color:var(--text-primary); font-weight:500;">3</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Quantity:</span>
+                            <span style="color:var(--text-primary); font-weight:500;">4</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Borrowing Days:</span>
+                            <span style="color:var(--text-primary); font-weight:500;">14</span>
+                        </div>
+
+                        <div class="summary-row total">
+                            <span>Items available:</span>
+                            <span style="color:var(--success-green);">All in stock</span>
+                        </div>
+
+                        <button class="btn btn-primary btn-block"
+                            style="margin-top:24px; padding:12px; font-size:16px;">
+                            Submit Request
+                        </button>
+                        <a href="#catalog" class="btn btn-outline btn-block"
+                            style="margin-top:12px; border:none; background:transparent;">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-requests" class="page-view">
+                <h1 class="page-title">My Borrowing Requests</h1>
+
+                <div class="tabs-container">
+                    <div class="tab">Pending</div>
+                    <div class="tab active">Approved</div>
+                    <div class="tab">Borrowed</div>
+                    <div class="tab">Returned</div>
+                    <div class="tab">All</div>
+                </div>
+
+                <div class="card" style="padding:0; overflow:hidden;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Request #</th>
+                                <th>Date Range</th>
+                                <th>Items</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight:600;">REQ-045</td>
+                                <td style="color:var(--text-secondary);">Feb 28 - Mar 5</td>
+                                <td>2 items</td>
+                                <td><span class="status-badge badge-pending">PENDING</span></td>
+                                <td><button class="btn btn-outline" style="padding:6px 16px; font-size:13px;"><i
+                                            class="ph ph-eye"></i> View</button></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600;">REQ-044</td>
+                                <td style="color:var(--text-secondary);">Feb 28 - Mar 7</td>
+                                <td>1 item</td>
+                                <td><span class="status-badge badge-approved">APPROVED</span></td>
+                                <td><button class="btn btn-outline" style="padding:6px 16px; font-size:13px;"><i
+                                            class="ph ph-eye"></i> View</button></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600;">REQ-043</td>
+                                <td style="color:var(--text-secondary);">Feb 27 - Mar 2</td>
+                                <td>3 items</td>
+                                <td><span class="status-badge badge-borrowed">BORROWED</span></td>
+                                <td><button class="btn btn-outline" style="padding:6px 16px; font-size:13px;"><i
+                                            class="ph ph-eye"></i> View</button></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600;">REQ-042</td>
+                                <td style="color:var(--text-secondary);">Feb 25 - Feb 28</td>
+                                <td>2 items</td>
+                                <td><span class="status-badge badge-returned">RETURNED</span></td>
+                                <td><button class="btn btn-outline" style="padding:6px 16px; font-size:13px;"><i
+                                            class="ph ph-eye"></i> View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="page-report" class="page-view">
+                <h1 class="page-title">Report Lab Issue</h1>
+                <div class="card" style="max-width:800px;">
+                    <form>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                            <div class="form-group">
+                                <label class="form-label">Lab Location</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ph ph-map-pin"></i>
+                                    <select class="form-input"
+                                        style="padding-left:38px; appearance:none; background:transparent;">
+                                        <option value="" disabled selected>Select a location...</option>
+                                        <option value="gle101">GLE Lab 101</option>
+                                        <option value="gle102">GLE Lab 102</option>
+                                        <option value="bldg_a">Building A</option>
+                                    </select>
+                                    <i class="ph ph-caret-down" style="left:auto; right:12px;"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">PC / Equipment Number</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ph ph-desktop"></i>
+                                    <input type="text" class="form-input" placeholder="e.g. PC-042">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Problem Description</label>
+                            <textarea class="form-input" rows="6" placeholder="Please describe the issue in detail..."
+                                style="resize:vertical; padding:16px;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Attachments (Optional)</label>
+                            <div class="upload-area">
+                                <i class="ph ph-upload-simple upload-icon"></i>
+                                <h3 style="font-size:16px; font-weight:600; margin-bottom:8px;">Click or drag file to
+                                    this area to upload</h3>
+                                <p style="font-size:14px; color:var(--text-secondary);">Support for a single or bulk
+                                    upload. Strictly prohibit from uploading company data or other band
+                                    files.<br>Accepts JPG, PNG, PDF formats.</p>
+                            </div>
+                            <!-- Image Previews -->
+                            <div style="display:flex; gap:16px; margin-top:16px;">
+                                <div
+                                    style="width:80px; height:80px; background:var(--bg-page); border-radius:var(--radius-md); border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; position:relative;">
+                                    <i class="ph ph-image" style="font-size:24px; color:var(--text-secondary);"></i>
+                                    <div
+                                        style="position:absolute; top:-6px; right:-6px; background:white; border-radius:50%; box-shadow:var(--shadow-sm); cursor:pointer;">
+                                        <i class="ph-fill ph-x-circle"
+                                            style="color:var(--error-red); font-size:20px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="display:flex; gap:16px; margin-top:32px; border-top:1px solid var(--border-color); padding-top:24px;">
+                            <button type="button" class="btn btn-primary" style="padding:12px 32px;"><i
+                                    class="ph ph-paper-plane-right"></i> Submit Ticket</button>
+                            <button type="button" class="btn btn-outline"
+                                style="border-color:var(--border-color); color:var(--text-secondary);">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="page-admin" class="page-view">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
+                    <h1 class="page-title" style="margin:0;">Admin Dashboard</h1>
+                    <div
+                        style="display:flex; gap:12px; align-items:center; background:white; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:8px 16px;">
+                        <i class="ph ph-calendar" style="color:var(--text-secondary); font-size:18px;"></i>
+                        <span style="font-size:14px; font-weight:500;">Feb 28, 2026 - Mar 02, 2026</span>
+                        <i class="ph ph-caret-down" style="color:var(--text-secondary); margin-left:8px;"></i>
+                    </div>
+                </div>
+
+                <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="card stat-card">
+                        <p class="stat-label">Total Equipment</p>
+                        <h2 class="stat-value">156</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Pending Requests</p>
+                        <h2 class="stat-value">12</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Active Loans</p>
+                        <h2 class="stat-value">8</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Open Tickets</p>
+                        <h2 class="stat-value">5</h2>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:16px; margin-bottom:32px;">
+                    <a href="#admin-inventory" class="btn btn-primary"
+                        onclick="document.querySelector('[data-page=\'admin-inventory\']').click()"><i
+                            class="ph ph-plus"></i> Add New Equipment</a>
+                    <button class="btn btn-outline"><i class="ph ph-file-text"></i> Generate Report</button>
+                    <button class="btn btn-outline"><i class="ph ph-download-simple"></i> Export Data</button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card" style="padding:0; overflow:hidden;">
+                        <div class="card-header-inner">
+                            <h3 class="card-title">Recent Requests</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Request #</th>
+                                    <th>Student</th>
+                                    <th>Items</th>
+                                    <th>Borrow Date</th>
+                                    <th>Status</th>
+                                    <th style="text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight:600;">REQ-045</td>
+                                    <td>John Smith</td>
+                                    <td>2</td>
+                                    <td style="color:var(--text-secondary);">Feb 28</td>
+                                    <td><span class="status-badge badge-pending">PENDING</span></td>
+                                    <td style="text-align:right;">
+                                        <div style="display:flex; gap:8px; justify-content:flex-end;">
+                                            <button class="btn btn-outline"
+                                                style="padding:6px 12px; font-size:13px; color:var(--success-green); border-color:var(--success-green);"><i
+                                                    class="ph-fill ph-check-circle"></i> Approve</button>
+                                            <button class="btn btn-outline"
+                                                style="padding:6px 12px; font-size:13px; color:var(--error-red); border-color:var(--error-red);"><i
+                                                    class="ph-fill ph-x-circle"></i> Deny</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:600;">REQ-044</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>1</td>
+                                    <td style="color:var(--text-secondary);">Feb 28</td>
+                                    <td><span class="status-badge badge-approved">APPROVED</span></td>
+                                    <td style="text-align:right;">
+                                        <button class="btn btn-outline"
+                                            style="padding:6px 12px; font-size:13px; border:none; background:transparent;"><i
+                                                class="ph ph-eye"></i> View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:600;">REQ-043</td>
+                                    <td>Mike Chen</td>
+                                    <td>3</td>
+                                    <td style="color:var(--text-secondary);">Feb 27</td>
+                                    <td><span class="status-badge badge-borrowed">BORROWED</span></td>
+                                    <td style="text-align:right;">
+                                        <button class="btn btn-outline"
+                                            style="padding:6px 12px; font-size:13px; border:none; background:transparent;"><i
+                                                class="ph ph-eye"></i> View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card" style="padding:0; overflow:hidden; margin-top:24px;">
+                        <div class="card-header-inner">
+                            <h3 class="card-title">Recent Tickets</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Ticket #</th>
+                                    <th>Priority</th>
+                                    <th>Description</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th style="text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight:600;">TKT-128</td>
+                                    <td><span
+                                            style="display:flex; align-items:center; gap:6px; color:#DC2626; font-size:12px; font-weight:600;"><i
+                                                class="ph-fill ph-warning-circle"></i> HIGH</span></td>
+                                    <td>Laptop won't power on</td>
+                                    <td style="color:var(--text-secondary);">Lab 1 - PC-042</td>
+                                    <td><span class="status-badge badge-open">OPEN</span></td>
+                                    <td style="text-align:right;"><button class="btn btn-outline"
+                                            style="padding:6px 16px; font-size:13px;">Update</button></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:600;">TKT-127</td>
+                                    <td><span
+                                            style="display:flex; align-items:center; gap:6px; color:#D97706; font-size:12px; font-weight:600;"><i
+                                                class="ph-fill ph-warning-circle"></i> MEDIUM</span></td>
+                                    <td>Broken HDMI port</td>
+                                    <td style="color:var(--text-secondary);">Bldg A - EQ-015</td>
+                                    <td><span class="status-badge badge-progress">IN PROGRESS</span></td>
+                                    <td style="text-align:right;"><button class="btn btn-outline"
+                                            style="padding:6px 16px; font-size:13px;">Update</button></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:600;">TKT-126</td>
+                                    <td><span
+                                            style="display:flex; align-items:center; gap:6px; color:#059669; font-size:12px; font-weight:600;"><i
+                                                class="ph-fill ph-check-circle"></i> LOW</span></td>
+                                    <td>Mouse not working</td>
+                                    <td style="color:var(--text-secondary);">Lab 3 - PC-128</td>
+                                    <td><span class="status-badge badge-open">OPEN</span></td>
+                                    <td style="text-align:right;"><button class="btn btn-outline"
+                                            style="padding:6px 16px; font-size:13px;">Update</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-admin-inventory" class="page-view">
+                <h1 class="page-title">Inventory Management</h1>
+                <div class="card" style="padding:0; overflow:hidden;">
+                    <div
+                        style="padding:24px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; gap:16px;">
+                        <button class="btn btn-primary"><i class="ph ph-plus"></i> Add New Item</button>
+                        <div style="display:flex; gap:12px; flex:1; max-width:600px;">
+                            <div class="search-wrapper" style="flex:1;">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" class="search-input" placeholder="Search inventory...">
+                            </div>
+                            <select class="form-input" style="width:160px;">
+                                <option>All Categories</option>
+                                <option>Router</option>
+                                <option>Switch</option>
+                            </select>
+                            <select class="form-input" style="width:160px;">
+                                <option>All Statuses</option>
+                                <option>Available</option>
+                                <option>Out of Stock</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th style="text-align:center;">Total Qty</th>
+                                <th style="text-align:center;">Available</th>
+                                <th>Status</th>
+                                <th style="text-align:right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div
+                                        style="width:40px; height:40px; background:var(--bg-page); border-radius:var(--radius-sm); border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); font-size:24px;">
+                                        <i class="ph ph-router"></i>
+                                    </div>
+                                </td>
+                                <td style="font-weight:600;">Router TP-Link</td>
+                                <td style="color:var(--text-secondary);">Router</td>
+                                <td style="text-align:center;">10</td>
+                                <td style="text-align:center;">5</td>
+                                <td><span
+                                        style="display:flex; align-items:center; gap:6px; color:var(--success-green); font-size:13px; font-weight:500;"><i
+                                            class="ph-fill ph-circle"></i> Available</span></td>
+                                <td style="text-align:right;">
+                                    <div style="display:flex; gap:8px; justify-content:flex-end;">
+                                        <button class="btn btn-outline"
+                                            style="padding:6px; font-size:16px; border:none; background:transparent; color:var(--text-secondary);"><i
+                                                class="ph ph-pencil-simple"></i></button>
+                                        <button class="btn btn-outline"
+                                            style="padding:6px; font-size:16px; border:none; background:transparent; color:var(--error-red);"><i
+                                                class="ph ph-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div
+                                        style="width:40px; height:40px; background:var(--bg-page); border-radius:var(--radius-sm); border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); font-size:24px;">
+                                        <i class="ph ph-plugs"></i>
+                                    </div>
+                                </td>
+                                <td style="font-weight:600;">Network Hub</td>
+                                <td style="color:var(--text-secondary);">Hub</td>
+                                <td style="text-align:center;">4</td>
+                                <td style="text-align:center;">0</td>
+                                <td><span
+                                        style="display:flex; align-items:center; gap:6px; color:var(--error-red); font-size:13px; font-weight:500;"><i
+                                            class="ph-fill ph-circle"></i> Out of Stock</span></td>
+                                <td style="text-align:right;">
+                                    <div style="display:flex; gap:8px; justify-content:flex-end;">
+                                        <button class="btn btn-outline"
+                                            style="padding:6px; font-size:16px; border:none; background:transparent; color:var(--text-secondary);"><i
+                                                class="ph ph-pencil-simple"></i></button>
+                                        <button class="btn btn-outline"
+                                            style="padding:6px; font-size:16px; border:none; background:transparent; color:var(--error-red);"><i
+                                                class="ph ph-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding:16px 24px; border-top:1px solid var(--border-color);">
+                        <div class="pagination">
+                            <button class="page-btn text-btn" disabled>Previous</button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn"
+                                style="border:none;pointer-events:none;background:transparent;">...</button>
+                            <button class="page-btn">10</button>
+                            <button class="page-btn text-btn">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-profile" class="page-view">
+                <h1 class="page-title">My Profile</h1>
+
+                <div class="profile-header">
+                    <img src="https://ui-avatars.com/api/?name=John+Munalem&background=2563EB&color=fff&size=100"
+                        alt="John Munalem" class="profile-img-large">
+                    <div class="profile-info">
+                        <h2 class="profile-name">John Nathaniel Munalem</h2>
+                        <span class="profile-role">STUDENT</span>
+                        <div class="profile-meta">
+                            <span><i class="ph ph-identification-card"></i> 22-5654-734</span>
+                            <span><i class="ph ph-envelope-simple"></i> john.munalem@cit.edu</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline"><i class="ph ph-pencil-simple"></i> Edit Profile</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <p class="stat-label">Total Requests</p>
+                        <h2 class="stat-value">24</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Active Loans</p>
+                        <h2 class="stat-value">2</h2>
+                    </div>
+                    <div class="card stat-card">
+                        <p class="stat-label">Pending Requests</p>
+                        <h2 class="stat-value">1</h2>
+                    </div>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tab active">Borrowing History</div>
+                    <div class="tab">My Tickets</div>
+                    <div class="tab">Settings</div>
+                </div>
+
+                <div class="card" style="padding:0; overflow:hidden;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Request #</th>
+                                <th>Date Range</th>
+                                <th>Items</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight:600;">REQ-042</td>
+                                <td style="color:var(--text-secondary);">Feb 25 - Feb 28</td>
+                                <td>2 items</td>
+                                <td><span class="status-badge badge-returned">RETURNED</span></td>
+                                <td><button class="btn btn-outline" style="padding:6px 16px; font-size:13px;"><i
+                                            class="ph ph-eye"></i> View</button></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600;">REQ-030</td>
+                                <td style="color:var(--text-secondary);">Jan 12 - Jan 15</td>
+                                <td>1 item</td>
+                                <td><span class="status-badge badge-returned">RETURNED</span></td>
+                                <td><button class="btn btn-outline" style="padding:6px 16px; font-size:13px;"><i
+                                            class="ph ph-eye"></i> View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="page-settings" class="page-view">
+                <h1 class="page-title">Settings</h1>
+
+                <div class="tabs-container">
+                    <div class="tab active">Account Settings</div>
+                    <div class="tab">Notification Preferences</div>
+                    <div class="tab">Theme Preferences</div>
+                </div>
+
+                <div class="card" style="padding:32px;">
+                    <div class="settings-section">
+                        <h3 style="font-size:18px; margin-bottom:24px; font-weight:600;">Notification Preferences</h3>
+
+                        <div class="toggle-switch">
+                            <div class="toggle-label">
+                                <span class="toggle-title">System Emails</span>
+                                <span class="toggle-desc">Receive emails for request approvals and denials.</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox checked">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-switch">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Ticket Updates</span>
+                                <span class="toggle-desc">Receive emails when your reported tickets change
+                                    status.</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-switch">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Return Reminders</span>
+                                <span class="toggle-desc">Receive a reminder email 1 day before equipment is due.</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-switch">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Marketing & Promotions</span>
+                                <span class="toggle-desc">Receive emails about new equipment and system updates.</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--border-color);">
+                            <button class="btn btn-primary" style="padding:10px 24px;">Save Preferences</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+
+</html>
