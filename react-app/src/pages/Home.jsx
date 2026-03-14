@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Home({ user }) {
     return (
         <div id="page-home" className="page-view active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -25,7 +27,7 @@ export default function Home({ user }) {
                 <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
                     <div className="card-header-inner">
                         <h3 className="card-title">Recent Requests</h3>
-                        <a href="#" className="view-all">View All</a>
+                        <Link to="/requests" className="view-all">View All</Link>
                     </div>
                     <table className="data-table">
                         <thead>
@@ -66,7 +68,7 @@ export default function Home({ user }) {
                 <div className="card" style={{ padding: 0, overflow: 'hidden', marginTop: '24px' }}>
                     <div className="card-header-inner">
                         <h3 className="card-title">Recent Tickets</h3>
-                        <a href="#" className="view-all">View All</a>
+                        <Link to="/report" className="view-all">View All</Link>
                     </div>
                     <table className="data-table">
                         <thead>

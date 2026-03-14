@@ -4,7 +4,7 @@ import { useAppContext } from '../context/AppContext'
 import '../styles/styles.css'
 
 export function TopNav({ user, onLogout }) {
-    const { cartItems } = useAppContext()
+    const { cartItems, isDarkMode, toggleTheme, globalSearch, setGlobalSearch } = useAppContext()
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -26,7 +26,16 @@ export function TopNav({ user, onLogout }) {
                 <div className="topnav-center">
                     <div className="topnav-search">
                         <i className="ph ph-magnifying-glass search-icon"></i>
-                        <input type="text" placeholder="Search equipment..." className="search-input" />
+                        <input
+                            type="text"
+                            placeholder="Search equipment..."
+                            className="search-input"
+                            value={globalSearch}
+                            onChange={(e) => {
+                                setGlobalSearch(e.target.value)
+                                if (window.location.pathname !== '/catalog') navigate('/catalog')
+                            }}
+                        />
                     </div>
                 </div>
 
@@ -39,6 +48,10 @@ export function TopNav({ user, onLogout }) {
                             </span>
                         )}
                     </NavLink>
+
+                    <button className="icon-btn" onClick={toggleTheme} title="Toggle Theme">
+                        <i className={isDarkMode ? "ph ph-sun" : "ph ph-moon"}></i>
+                    </button>
 
                     <div className="user-menu-container">
                         <button className="icon-btn" onClick={() => setDropdownOpen(!dropdownOpen)}>

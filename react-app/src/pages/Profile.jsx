@@ -1,6 +1,38 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { requestApi } from '../services/api'
 
 export default function Profile({ user }) {
+    const [history, setHistory] = useState([])
+
+    useEffect(() => {
+        if (user?.id) {
+            requestApi.getByUser(user.id).then(res => setHistory(res.requests || [])).catch(console.error)
+        }
+    }, [user])
+
+    const downloadCSV = () => {
+        if (!history || history.length === 0) return alert("No history to download");
+
+        const headers = ["Request ID", "Equipment Name", "Borrow Date", "Return Date", "Status"];
+        const rows = history.map(req => [
+            `REQ-${req.id}`,
+            req.equipment?.name || 'Unknown',
+            req.borrowDate,
+            req.returnDate,
+            req.status
+        ]);
+
+        const csvContent = [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", `borrowing_history_${user.name.replace(/\s+/g, '_')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     return (
         <div id="page-profile" className="page-view active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div style={{ marginBottom: '32px' }}>
@@ -128,7 +160,7 @@ export default function Profile({ user }) {
                             <Link to="/catalog" className="btn btn-outline" style={{ justifyContent: 'center', padding: '12px' }}>Browse Equipment</Link>
                             <Link to="/requests" className="btn btn-outline" style={{ justifyContent: 'center', padding: '12px' }}>My Requests</Link>
                             <Link to="/report" className="btn btn-outline" style={{ justifyContent: 'center', padding: '12px' }}>Report Issue</Link>
-                            <button onClick={() => alert('Downloading your full borrowing history...')} className="btn btn-primary" style={{ justifyContent: 'center', padding: '12px' }}>Download History</button>
+                            <button onClick={downloadCSV} className="btn btn-primary" style={{ justifyContent: 'center', padding: '12px' }}>Download History</button>
                         </div>
                     </div>
                 </div>

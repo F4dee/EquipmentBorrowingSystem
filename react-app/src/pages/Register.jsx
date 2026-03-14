@@ -7,6 +7,7 @@ export default function Register() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [role, setRole] = useState('user')
     const [showPassword, setShowPassword] = useState(false)
     const [passwordStrength, setPasswordStrength] = useState(0)
     const [error, setError] = useState('')
@@ -63,7 +64,7 @@ export default function Register() {
 
         setIsLoading(true)
         try {
-            const data = await authApi.register(name, email, password)
+            const data = await authApi.register({ name, email, password, role })
             setSuccess(data.message || 'Registration successful! You can now login.')
             setTimeout(() => {
                 navigate('/login')
@@ -96,6 +97,13 @@ export default function Register() {
                             <i className="ph ph-user"></i>
                             <input type="text" className="form-input" placeholder="Juan Dela Cruz" value={name} onChange={(e) => setName(e.target.value)} required />
                         </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label">Account Type</label>
+                        <select className="form-input" style={{ paddingLeft: '12px' }} value={role} onChange={(e) => setRole(e.target.value)}>
+                            <option value="user">Borrower (Student/Faculty)</option>
+                            <option value="admin">Administrator</option>
+                        </select>
                     </div>
                     <div className="form-group">
                         <label className="form-label">CIT-U Email</label>

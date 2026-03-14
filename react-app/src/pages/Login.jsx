@@ -15,7 +15,13 @@ export default function Login({ onLogin }) {
         setIsLoading(true)
 
         try {
-            const data = await authApi.login(email, password)
+            const data = await authApi.login({ email, password })
+            localStorage.setItem('jwt_token', data.accessToken) // Extract JWT payload 
+
+            // Map backend SDD 'fullName' to frontend expected 'name' property
+            if (data.user) {
+                data.user.name = data.user.fullName || data.user.name
+            }
             onLogin(data.user)
 
             // Navigate based on role

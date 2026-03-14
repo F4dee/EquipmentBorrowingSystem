@@ -19,8 +19,6 @@ export default function Settings() {
         marketing: false
     })
 
-    const [theme, setTheme] = useState('dark-navy')
-
     useEffect(() => {
         if (user) {
             setFormData({ name: user.name, email: user.email })
@@ -37,10 +35,6 @@ export default function Settings() {
         alert('Notification preferences updated!')
     }
 
-    const handleSaveTheme = () => {
-        alert(`Theme successfully set to ${theme}! (Simulated)`)
-    }
-
     return (
         <div id="page-settings" className="page-view active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div style={{ marginBottom: '24px' }}>
@@ -51,7 +45,7 @@ export default function Settings() {
             <h1 className="page-title">Settings</h1>
 
             <div className="tabs-container">
-                {['Account Settings', 'Notification Preferences', 'Theme Preferences'].map(tab => (
+                {['Account Settings', 'Notification Preferences'].map(tab => (
                     <div
                         key={tab}
                         className={`tab ${activeTab === tab ? 'active' : ''}`}
@@ -144,26 +138,6 @@ export default function Settings() {
 
                         <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
                             <button onClick={handleSaveNotifications} className="btn btn-primary" style={{ padding: '10px 24px' }}>Save Preferences</button>
-                        </div>
-                    </div>
-                )}
-
-                {activeTab === 'Theme Preferences' && (
-                    <div className="settings-section">
-                        <h3 style={{ fontSize: '18px', marginBottom: '24px', fontWeight: 600 }}>Theme Preferences</h3>
-                        <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                                <input type="radio" name="theme" checked={theme === 'dark-navy'} onChange={() => setTheme('dark-navy')} />
-                                <span>Dark Navy (Sharp)</span>
-                            </label>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                                <input type="radio" name="theme" checked={theme === 'light'} onChange={() => setTheme('light')} />
-                                <span>Light Classic</span>
-                            </label>
-                        </div>
-                        <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '16px' }}>
-                            <button onClick={handleSaveTheme} className="btn btn-primary" style={{ padding: '10px 24px' }}>Save Theme</button>
-                            <button onClick={() => navigate('/profile')} className="btn btn-outline" style={{ padding: '10px 24px' }}>Back to Profile</button>
                         </div>
                     </div>
                 )}

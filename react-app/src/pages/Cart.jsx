@@ -1,21 +1,62 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
+import { requestApi } from '../services/api'
 
 export default function Cart() {
-    const { cartItems, updateQuantity, removeFromCart, clearCart } = useAppContext()
+    const { cartItems, updateQuantity, removeFromCart, clearCart, user, showToast } = useAppContext()
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
 
     const totalUniqueItems = cartItems.length
     const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0)
     // Mock days calculation based on presence of items
     const totalDays = cartItems.length > 0 ? 9 : 0
 
-    const handleSubmit = () => {
-        alert("Borrowing request submitted successfully!")
-        clearCart()
+    // Check if any item in the cart is no longer available
+    const allItemsAvailable = cartItems.every(item => item.status && item.status !== 'MAINTENANCE' && item.status !== 'OUT OF STOCK' && item.status !== 'ON LOAN')
+
+    const handleSubmit = async () => {
+        if (!user) {
+            showToast("Please log in to submit a request.", "error")
+            navigate('/login')
+            return
+        }
+
+        setIsSubmitting(true)
+        setError(null)
+
+        try {
+            // Need to submit each unique item request 
+            // In a more complex system, this might be a bulk endpoint or a CartEntity
+            for (const item of cartItems) {
+                // Formatting dates correctly might be needed depending on your exact backend expected format
+                // For now, we will use a basic "yyyy-MM-dd" structure in a real app, 
+                // but since our mock from/to strings are "Feb 28, 2026", let's map them simple:
+                const fromDate = new Date(item.from).toISOString().split('T')[0]
+                const toDate = new Date(item.to).toISOString().split('T')[0]
+
+                await requestApi.create({
+                    userId: user.id,
+                    equipmentId: item.dbId || parseInt(item.id.replace(/[^\d]/g, '') || 1),
+                    borrowDate: fromDate,
+                    returnDate: toDate
+                })
+            }
+            showToast("Borrowing request submitted successfully!")
+            clearCart()
+            navigate('/requests')
+        } catch (err) {
+            setError(err.message || 'Failed to submit request')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
         <div id="page-cart" className="page-view active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            {error && <div style={{ color: 'var(--error-red)', backgroundColor: '#ffebee', padding: '10px', borderRadius: '4px', marginBottom: '16px', textAlign: 'center' }}>{error}</div>}
             <h1 className="page-title">Borrowing Cart</h1>
 
             <div className="cart-grid">
@@ -49,7 +90,7 @@ export default function Cart() {
                                                 <div className="quantity-selector" style={{ margin: '0 auto' }}>
                                                     <button className="qty-btn" onClick={() => updateQuantity(item.id, -1)} disabled={item.quantity <= 1}><i className="ph ph-minus"></i></button>
                                                     <input type="number" className="qty-input" value={item.quantity} readOnly />
-                                                    <button className="qty-btn" onClick={() => updateQuantity(item.id, 1)}><i className="ph ph-plus"></i></button>
+                                                    <button className="qty-btn" onClick={() => updateQuantity(item.id, 1)} disabled={true} title="Maximum stock reached"><i className="ph ph-plus"></i></button>
                                                 </div>
                                             </td>
                                             <td>
@@ -102,14 +143,20 @@ export default function Cart() {
                             <div className="summary-row total">
                                 <span>Items available:</span>
                                 {totalUniqueItems > 0 ? (
-                                    <span style={{ color: 'var(--success-green)' }}>All in stock <i className="ph-fill ph-check-circle"></i></span>
+                                    allItemsAvailable ? (
+                                        <span style={{ color: 'var(--success-green)' }}>All in stock <i className="ph-fill ph-check-circle"></i></span>
+                                    ) : (
+                                        <span style={{ color: 'var(--error-red)' }}>Insufficient stock <i className="ph-fill ph-warning-circle"></i></span>
+                                    )
                                 ) : (
                                     <span style={{ color: 'var(--text-secondary)' }}>N/A</span>
                                 )}
                             </div>
                         </div>
 
-                        <button className="btn btn-primary btn-full" disabled={totalUniqueItems === 0} style={{ padding: '12px', fontSize: '15px' }} onClick={handleSubmit}>Submit Request</button>
+                        <button className="btn btn-primary btn-full" disabled={totalUniqueItems === 0 || isSubmitting} style={{ padding: '12px', fontSize: '15px' }} onClick={handleSubmit}>
+                            {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                        </button>
                         <Link to="/catalog" className="text-btn" style={{ width: '100%', justifyContent: 'center', marginTop: '16px' }}>Continue Shopping</Link>
                     </div>
                 </div>

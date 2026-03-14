@@ -1,15 +1,28 @@
-import { useState } from 'react'
-
-const allRequests = [
-    { id: 'REQ-045', dateRange: 'Feb 28 - Mar 5', items: '2 items', status: 'PENDING', badgeClass: 'badge-pending', details: ['MacBook Pro 16"', 'USB-C Hub'] },
-    { id: 'REQ-044', dateRange: 'Feb 28 - Mar 7', items: '1 item', status: 'APPROVED', badgeClass: 'badge-approved', details: ['Sony A7 IV'] },
-    { id: 'REQ-043', dateRange: 'Feb 27 - Mar 2', items: '3 items', status: 'BORROWED', badgeClass: 'badge-borrowed', details: ['Dell XPS 15', 'HDMI Cable 10ft', 'Mouse'] },
-    { id: 'REQ-042', dateRange: 'Feb 25 - Feb 28', items: '2 items', status: 'RETURNED', badgeClass: 'badge-returned', details: ['Bose S1 Pro', 'Microphone'] },
-]
+import { useState, useEffect } from 'react'
+import { requestApi } from '../services/api'
+import { useAppContext } from '../context/AppContext'
 
 export default function Requests() {
+    const { user } = useAppContext()
     const [activeTab, setActiveTab] = useState('All')
     const [selectedRequest, setSelectedRequest] = useState(null)
+    const [allRequests, setAllRequests] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        if (!user) return;
+        const fetchRequests = async () => {
+            try {
+                const data = await requestApi.getByUser(user.id)
+                setAllRequests(data.requests || [])
+            } catch (err) {
+                console.error("Failed to fetch requests", err)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        fetchRequests()
+    }, [user])
 
     const filteredRequests = activeTab === 'All'
         ? allRequests
@@ -49,12 +62,18 @@ export default function Requests() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredRequests.length > 0 ? filteredRequests.map(req => (
+                        {isLoading ? (
+                            <tr>
+                                <td colSpan="5" style={{ textAlign: 'center', padding: '32px', color: 'var(--text-secondary)' }}>
+                                    Loading requests...
+                                </td>
+                            </tr>
+                        ) : filteredRequests.length > 0 ? filteredRequests.map(req => (
                             <tr key={req.id}>
-                                <td style={{ fontWeight: 600 }}>{req.id}</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>{req.dateRange}</td>
-                                <td>{req.items}</td>
-                                <td><span className={`status-badge ${req.badgeClass}`}>{req.status}</span></td>
+                                <td style={{ fontWeight: 600 }}>REQ-{req.id}</td>
+                                <td style={{ color: 'var(--text-secondary)' }}>{req.borrowDate} - {req.returnDate}</td>
+                                <td>{req.equipment?.name || 'Unknown Item'}</td>
+                                <td><span className={`status-badge badge-${req.status.toLowerCase()}`}>{req.status}</span></td>
                                 <td><button className="btn btn-outline" onClick={() => handleView(req)} style={{ padding: '6px 16px', fontSize: '13px' }}><i className="ph ph-eye"></i> View</button></td>
                             </tr>
                         )) : (
@@ -76,16 +95,16 @@ export default function Requests() {
                             <button onClick={closeView} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: 'var(--text-secondary)' }}><i className="ph ph-x"></i></button>
                         </div>
                         <div style={{ marginBottom: '16px' }}>
-                            <span style={{ fontWeight: 600, fontSize: '18px', marginRight: '16px' }}>{selectedRequest.id}</span>
-                            <span className={`status-badge ${selectedRequest.badgeClass}`}>{selectedRequest.status}</span>
+                            <span style={{ fontWeight: 600, fontSize: '18px', marginRight: '16px' }}>REQ-{selectedRequest.id}</span>
+                            <span className={`status-badge badge-${selectedRequest.status.toLowerCase()}`}>{selectedRequest.status}</span>
                         </div>
-                        <p style={{ margin: '0 0 16px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>Borrow Dates: {selectedRequest.dateRange}</p>
+                        <p style={{ margin: '0 0 16px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>Borrow Dates: {selectedRequest.borrowDate} to {selectedRequest.returnDate}</p>
 
                         <h4 style={{ fontSize: '14px', marginBottom: '12px', paddingBottom: '8px', borderBottom: '1px solid var(--border-color)' }}>Items Requested:</h4>
                         <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', color: 'var(--text-primary)' }}>
-                            {selectedRequest.details.map((item, idx) => (
-                                <li key={idx} style={{ marginBottom: '8px' }}>{item}</li>
-                            ))}
+                            <li style={{ marginBottom: '8px' }}>
+                                <strong>{selectedRequest.equipment?.name}</strong> (ID: {selectedRequest.equipment?.equipId})
+                            </li>
                         </ul>
 
                         <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end' }}>
