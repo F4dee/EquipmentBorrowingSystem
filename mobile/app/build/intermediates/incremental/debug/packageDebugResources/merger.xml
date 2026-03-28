@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res"><file name="activity_login" path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res\layout\activity_login.xml" qualifiers="" type="layout"/><file name="activity_register" path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res\layout\activity_register.xml" qualifiers="" type="layout"/><file path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res\values\colors.xml" qualifiers=""><color name="black">#FF000000</color><color name="white">#FFFFFFFF</color><color name="error_red">#EF4444</color><color name="error_bg">#FEE2E2</color><color name="bg_page">#F4F6F8</color><color name="border_color">#D1D5DB</color><color name="text_primary">#1A2530</color><color name="text_muted">#9CA3AF</color><color name="bg_card">#FFFFFF</color><color name="primary_light">#F1F4F9</color><color name="primary_blue">#1A2530</color><color name="text_secondary">#6B7280</color><color name="primary_hover">#111822</color></file><file path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">Equipment Borrowing System</string><string name="login">Login</string><string name="register">Register</string><string name="email">Email</string><string name="password">Password</string><string name="name">Full Name</string><string name="no_account">Don\'t have an account? Register</string><string name="have_account">Already have an account? Login</string><string name="error_invalid_email">Invalid email</string><string name="error_invalid_password">Password must be at least 8 characters and contain both letters and numbers</string><string name="error_invalid_name">Name cannot be empty</string><string name="success_registration">Registration successful! Please login.</string><string name="error_registration">Registration failed. Please try again.</string><string name="error_login">Invalid email or password</string></file><file path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res\values\themes.xml" qualifiers=""><style name="Theme.EquipmentBorrowingSystem" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryVariant">@color/primary_hover</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <item name="colorSecondary">@color/primary_light</item>
+        <item name="colorSecondaryVariant">@color/primary_light</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        
+        <item name="android:windowBackground">@color/bg_page</item>
+        <item name="android:colorBackground">@color/bg_page</item>
+        <item name="colorError">@color/error_red</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        
+        
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Equipment.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Equipment.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Equipment.LargeComponent</item>
+
+        
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style><style name="ShapeAppearance.Equipment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">0dp</item>
+    </style><style name="ShapeAppearance.Equipment.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">0dp</item>
+    </style><style name="ShapeAppearance.Equipment.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">0dp</item>
+    </style></file><file name="activity_dashboard" path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\main\res\layout\activity_dashboard.xml" qualifiers="" type="layout"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\EquipmentBorrowingSystem-main\EquipmentBorrowingSystem-main\mobile\app\build\generated\res\resValues\debug"/></dataSet><mergedItems/></merger>

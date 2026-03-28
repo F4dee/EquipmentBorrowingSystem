@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\l13y17w32.LABHCI\\.gradle\\daemon\\8.2\\edu.cit.lastname.equipmentborrowingsystem.app-mergeDebugResources-27:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\l13y17w32.LABHCI\\.gradle\\daemon\\8.2\\edu.cit.lastname.equipmentborrowingsystem.app-main-30:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\l13y17w32.LABHCI\\.gradle\\daemon\\8.2\\edu.cit.lastname.equipmentborrowingsystem.app-mergeDebugResources-27:\\layout\\activity_register.xml",
+        "source": "C:\\Users\\l13y17w32.LABHCI\\.gradle\\daemon\\8.2\\edu.cit.lastname.equipmentborrowingsystem.app-main-30:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "edu.cit.lastname.equipmentborrowingsystem.app-mergeDebugResources-27:/layout/activity_dashboard.xml",
+        "source": "edu.cit.lastname.equipmentborrowingsystem.app-main-30:/layout/activity_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\l13y17w32.LABHCI\\.gradle\\daemon\\8.2\\edu.cit.lastname.equipmentborrowingsystem.app-mergeDebugResources-27:\\layout\\activity_dashboard.xml",
+        "source": "C:\\Users\\l13y17w32.LABHCI\\.gradle\\daemon\\8.2\\edu.cit.lastname.equipmentborrowingsystem.app-main-30:\\layout\\activity_dashboard.xml"
+    }
+]

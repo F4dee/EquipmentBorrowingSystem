@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.EquipmentBorrowingSystem" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryVariant">@color/primary_hover</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <item name="colorSecondary">@color/primary_light</item>
+        <item name="colorSecondaryVariant">@color/primary_light</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        
+        <item name="android:windowBackground">@color/bg_page</item>
+        <item name="android:colorBackground">@color/bg_page</item>
+        <item name="colorError">@color/error_red</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        
+        <!-- Implement 0dp corners -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Equipment.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Equipment.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Equipment.LargeComponent</item>
+
+        <!-- Form fields outline style -->
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <style name="ShapeAppearance.Equipment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">0dp</item>
+    </style>
+    <style name="ShapeAppearance.Equipment.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">0dp</item>
+    </style>
+    <style name="ShapeAppearance.Equipment.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">0dp</item>
+    </style>
+</resources>

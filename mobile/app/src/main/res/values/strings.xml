@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Equipment Borrowing System</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Full Name</string>
+    <string name="no_account">Don\'t have an account? Register</string>
+    <string name="have_account">Already have an account? Login</string>
+    <string name="error_invalid_email">Invalid email</string>
+    <string name="error_invalid_password">Password must be at least 8 characters and contain both letters and numbers</string>
+    <string name="error_invalid_name">Name cannot be empty</string>
+    <string name="success_registration">Registration successful! Please login.</string>
+    <string name="error_registration">Registration failed. Please try again.</string>
+    <string name="error_login">Invalid email or password</string>
+</resources>
