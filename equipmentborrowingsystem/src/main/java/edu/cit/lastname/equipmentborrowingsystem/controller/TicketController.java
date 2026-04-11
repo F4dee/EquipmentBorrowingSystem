@@ -37,6 +37,15 @@ public class TicketController {
         return ResponseEntity.ok(ApiResponse.success(data));
     }
 
+    // Fetch user tickets
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getUserTickets(@PathVariable Long userId) {
+        List<MaintenanceTicket> tickets = ticketRepository.findByUserId(userId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("tickets", tickets);
+        return ResponseEntity.ok(ApiResponse.success(data));
+    }
+
     // Submit a new maintenance ticket
     @PostMapping
     public ResponseEntity<ApiResponse<Map<String, Object>>> submitTicket(@RequestBody CreateTicketDTO ticketDto) {

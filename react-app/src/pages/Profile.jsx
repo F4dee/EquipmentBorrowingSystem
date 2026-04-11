@@ -59,11 +59,11 @@ export default function Profile({ user }) {
                             </div>
                             <div className="info-row">
                                 <i className="ph ph-phone"></i>
-                                <span>+1 (555) 123-4567</span>
+                                <span>{user?.phone || '+63 (000) 000-0000'}</span>
                             </div>
                             <div className="info-row">
                                 <i className="ph ph-calendar-blank"></i>
-                                <span>Joined: Jan 15, 2024</span>
+                                <span>Joined: {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'}) : new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
                             </div>
                         </div>
 
@@ -111,46 +111,22 @@ export default function Profile({ user }) {
                             <Link to="/requests" style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>View All</Link>
                         </div>
                         <div className="history-list">
-                            <div className="history-card">
-                                <div className="history-top">
-                                    <div>
-                                        <h4 style={{ margin: '0 0 4px 0', fontSize: '14px' }}>REQ-045</h4>
-                                        <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)' }}>Mar 1, 2026 &rarr; Mar 7, 2026</p>
+                            {history.length > 0 ? history.map(req => (
+                                <div className="history-card" key={req.id}>
+                                    <div className="history-top">
+                                        <div>
+                                            <h4 style={{ margin: '0 0 4px 0', fontSize: '14px' }}>REQ-{req.id}</h4>
+                                            <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)' }}>{req.borrowDate} &rarr; {req.returnDate}</p>
+                                        </div>
+                                        <span className={`status-badge badge-${req.status.toLowerCase()}`}>{req.status}</span>
                                     </div>
-                                    <span className="badge-active">ACTIVE</span>
+                                    <ul className="history-items">
+                                        <li>{req.equipment?.name || 'Equipment Item'}</li>
+                                    </ul>
                                 </div>
-                                <ul className="history-items">
-                                    <li>MacBook Pro 16"</li>
-                                    <li>USB-C Cable</li>
-                                </ul>
-                            </div>
-
-                            <div className="history-card">
-                                <div className="history-top">
-                                    <div>
-                                        <h4 style={{ margin: '0 0 4px 0', fontSize: '14px' }}>REQ-038</h4>
-                                        <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)' }}>Feb 20, 2026 &rarr; Feb 27, 2026</p>
-                                    </div>
-                                    <span className="badge-completed">COMPLETED</span>
-                                </div>
-                                <ul className="history-items">
-                                    <li>Canon EOS R5</li>
-                                </ul>
-                            </div>
-
-                            <div className="history-card">
-                                <div className="history-top">
-                                    <div>
-                                        <h4 style={{ margin: '0 0 4px 0', fontSize: '14px' }}>REQ-032</h4>
-                                        <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)' }}>Feb 10, 2026 &rarr; Feb 17, 2026</p>
-                                    </div>
-                                    <span className="badge-completed">COMPLETED</span>
-                                </div>
-                                <ul className="history-items">
-                                    <li>iPad Pro 12.9"</li>
-                                    <li>Apple Pencil</li>
-                                </ul>
-                            </div>
+                            )) : (
+                                <p style={{ color: 'var(--text-secondary)', padding: '16px' }}>No borrowing history found.</p>
+                            )}
                         </div>
                     </div>
 

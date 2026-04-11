@@ -4,7 +4,7 @@ import { useAppContext } from '../context/AppContext'
 import { requestApi } from '../services/api'
 
 export default function Cart() {
-    const { cartItems, updateQuantity, removeFromCart, clearCart, user, showToast } = useAppContext()
+    const { cartItems, updateQuantity, removeFromCart, clearCart, updateItemDate, user, showToast } = useAppContext()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
@@ -40,6 +40,7 @@ export default function Cart() {
                 await requestApi.create({
                     userId: user.id,
                     equipmentId: item.dbId || parseInt(item.id.replace(/[^\d]/g, '') || 1),
+                    quantity: item.quantity,
                     borrowDate: fromDate,
                     returnDate: toDate
                 })
@@ -95,8 +96,14 @@ export default function Cart() {
                                             </td>
                                             <td>
                                                 <div style={{ fontSize: '13px' }}>
-                                                    <div style={{ marginBottom: '4px' }}><span style={{ color: 'var(--text-secondary)' }}>From:</span> {item.from}</div>
-                                                    <div><span style={{ color: 'var(--text-secondary)' }}>To:</span> {item.to}</div>
+                                                    <div style={{ marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                        <span style={{ color: 'var(--text-secondary)', width: '36px' }}>From:</span> 
+                                                        <input type="date" className="form-input" style={{padding: '4px', height: '28px', flex: 1}} value={item.from} onChange={(e) => updateItemDate(item.id, 'from', e.target.value)} />
+                                                    </div>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                        <span style={{ color: 'var(--text-secondary)', width: '36px' }}>To:</span> 
+                                                        <input type="date" className="form-input" style={{padding: '4px', height: '28px', flex: 1}} value={item.to} onChange={(e) => updateItemDate(item.id, 'to', e.target.value)} />
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td style={{ textAlign: 'right' }}>

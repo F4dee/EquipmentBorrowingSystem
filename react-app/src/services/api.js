@@ -102,4 +102,7 @@ export const ticketApi = {
 
     // For Admins (mapped to standard ticket logic for this demonstration)
     getAll: () => fetchApi('/admin/tickets', { headers: getAuthHeaders() }),
+    
+    // For Users
+    getByUser: (userId) => fetchApi(`/tickets/user/${userId}`, { headers: getAuthHeaders() }),
 };

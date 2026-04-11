@@ -13,7 +13,7 @@ export function Sidebar({ user, onLogout }) {
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
-                <div className="logo-placeholder"></div>
+                <img src="/Image/Mainlogoborrowing.png" alt="Logo" style={{ width: '40px', height: '40px', objectFit: 'contain', marginRight: '8px' }} />
                 <div className="logo-text">
                     <span>EQUIPMENT</span>
                     <span>BORROWING SYSTEM</span>
@@ -38,9 +38,13 @@ export function Sidebar({ user, onLogout }) {
                         <i className="ph ph-file-text"></i>
                         Requests
                     </NavLink>
+                    <NavLink to="/tickets" className="nav-item">
+                        <i className="ph ph-ticket"></i>
+                        Tickets
+                    </NavLink>
                     <NavLink to="/report" className="nav-item">
                         <i className="ph ph-warning"></i>
-                        Report
+                        Report Issue
                     </NavLink>
                 </div>
 

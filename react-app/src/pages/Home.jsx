@@ -1,6 +1,21 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { requestApi, ticketApi } from '../services/api'
 
 export default function Home({ user }) {
+    const [requests, setRequests] = useState([])
+    const [tickets, setTickets] = useState([])
+
+    useEffect(() => {
+        if (user?.id) {
+            requestApi.getByUser(user.id)
+                .then(res => setRequests(res.requests || []))
+                .catch(console.error)
+            ticketApi.getByUser(user.id)
+                .then(res => setTickets(res.tickets || res || []))
+                .catch(console.error)
+        }
+    }, [user])
     return (
         <div id="page-home" className="page-view active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div style={{ marginBottom: '32px' }}>
@@ -40,27 +55,19 @@ export default function Home({ user }) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style={{ fontWeight: 600 }}>REQ-045</td>
-                                <td>John Smith</td>
-                                <td>2</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>Feb 28</td>
-                                <td><span className="status-badge badge-pending">PENDING</span></td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: 600 }}>REQ-044</td>
-                                <td>Sarah Johnson</td>
-                                <td>1</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>Feb 28</td>
-                                <td><span className="status-badge badge-approved">APPROVED</span></td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: 600 }}>REQ-043</td>
-                                <td>Mike Chen</td>
-                                <td>3</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>Feb 27</td>
-                                <td><span className="status-badge badge-borrowed">BORROWED</span></td>
-                            </tr>
+                            {requests.length > 0 ? requests.slice(0, 5).map(req => (
+                                <tr key={req.id}>
+                                    <td style={{ fontWeight: 600 }}>REQ-{req.id}</td>
+                                    <td>{user?.name || 'Student'}</td>
+                                    <td>{req.equipment?.name || 'Equipment Item'}</td>
+                                    <td style={{ color: 'var(--text-secondary)' }}>{req.borrowDate}</td>
+                                    <td><span className={`status-badge badge-${req.status.toLowerCase()}`}>{req.status}</span></td>
+                                </tr>
+                            )) : (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: 'center', padding: '24px', color: 'var(--text-secondary)' }}>No recent requests found</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -68,7 +75,7 @@ export default function Home({ user }) {
                 <div className="card" style={{ padding: 0, overflow: 'hidden', marginTop: '24px' }}>
                     <div className="card-header-inner">
                         <h3 className="card-title">Recent Tickets</h3>
-                        <Link to="/report" className="view-all">View All</Link>
+                        <Link to="/tickets" className="view-all">View All</Link>
                     </div>
                     <table className="data-table">
                         <thead>
@@ -81,27 +88,19 @@ export default function Home({ user }) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style={{ fontWeight: 600 }}>TKT-128</td>
-                                <td><span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#DC2626', fontSize: '12px', fontWeight: 600 }}><i className="ph-fill ph-warning-circle"></i> HIGH</span></td>
-                                <td>Laptop won't power on</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>Lab 1 - PC-042</td>
-                                <td><span className="status-badge badge-open">OPEN</span></td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: 600 }}>TKT-127</td>
-                                <td><span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#D97706', fontSize: '12px', fontWeight: 600 }}><i className="ph-fill ph-warning-circle"></i> MEDIUM</span></td>
-                                <td>Broken HDMI port</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>Bldg A - EQ-015</td>
-                                <td><span className="status-badge badge-progress">IN PROGRESS</span></td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: 600 }}>TKT-126</td>
-                                <td><span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#059669', fontSize: '12px', fontWeight: 600 }}><i className="ph-fill ph-check-circle"></i> LOW</span></td>
-                                <td>Mouse not working</td>
-                                <td style={{ color: 'var(--text-secondary)' }}>Lab 3 - PC-128</td>
-                                <td><span className="status-badge badge-open">OPEN</span></td>
-                            </tr>
+                            {tickets.length > 0 ? tickets.slice(0, 5).map(ticket => (
+                                <tr key={ticket.id}>
+                                    <td style={{ fontWeight: 600 }}>TKT-{ticket.id}</td>
+                                    <td><span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600 }}><i className="ph-fill ph-warning-circle"></i> STANDARD</span></td>
+                                    <td>{ticket.description}</td>
+                                    <td style={{ color: 'var(--text-secondary)' }}>{ticket.labLocation} - {ticket.pcNumber}</td>
+                                    <td><span className={`status-badge badge-${ticket.status.toLowerCase()}`}>{ticket.status}</span></td>
+                                </tr>
+                            )) : (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: 'center', padding: '24px', color: 'var(--text-secondary)' }}>No recent tickets found</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

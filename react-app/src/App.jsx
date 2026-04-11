@@ -8,6 +8,7 @@ import Catalog from './pages/Catalog'
 import ItemDetail from './pages/ItemDetail'
 import Cart from './pages/Cart'
 import Requests from './pages/Requests'
+import Tickets from './pages/Tickets'
 import Report from './pages/Report'
 import Admin from './pages/Admin'
 import AdminInventory from './pages/AdminInventory'
@@ -47,6 +48,7 @@ function App() {
           <Route path="/item/:id" element={<ProtectedRoute user={user}><ItemDetail /></ProtectedRoute>} />
           <Route path="/cart" element={<ProtectedRoute user={user}><Cart /></ProtectedRoute>} />
           <Route path="/requests" element={<ProtectedRoute user={user}><Requests /></ProtectedRoute>} />
+          <Route path="/tickets" element={<ProtectedRoute user={user}><Tickets /></ProtectedRoute>} />
           <Route path="/report" element={<ProtectedRoute user={user}><Report /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute user={user}><Profile user={user} /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute user={user}><Settings /></ProtectedRoute>} />

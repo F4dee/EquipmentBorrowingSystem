@@ -18,7 +18,7 @@ export function TopNav({ user, onLogout }) {
             <div className="topnav-container">
                 <div className="topnav-left">
                     <Link to="/" className="topnav-logo">
-                        <div className="logo-placeholder" style={{ width: '28px', height: '28px', backgroundColor: 'var(--border-color)', borderRadius: '0', marginRight: '12px' }}></div>
+                        <img src="/Image/Mainlogoborrowing.png" alt="Logo" style={{ width: '28px', height: '28px', objectFit: 'contain', marginRight: '12px' }} />
                         <span style={{ fontWeight: 700, fontSize: '18px', color: 'var(--text-primary)' }}>Equipment System</span>
                     </Link>
                 </div>
@@ -66,6 +66,7 @@ export function TopNav({ user, onLogout }) {
                                 </div>
                                 <NavLink to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>Profile</NavLink>
                                 <NavLink to="/requests" className="dropdown-item" onClick={() => setDropdownOpen(false)}>My Requests</NavLink>
+                                <NavLink to="/tickets" className="dropdown-item" onClick={() => setDropdownOpen(false)}>My Tickets</NavLink>
                                 {user?.role === 'admin' && (
                                     <>
                                         <div className="dropdown-divider"></div>

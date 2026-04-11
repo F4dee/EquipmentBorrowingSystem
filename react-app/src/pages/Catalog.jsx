@@ -3,6 +3,20 @@ import { Link } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import { equipmentApi } from '../services/api'
 
+const getImageUrl = (name) => {
+    if (!name) return '/Image/dellxps15.jpg';
+    const n = name.toLowerCase();
+    if (n.includes('macbook')) return '/Image/465-4656388_macbook-pro-16-hd-png-download.png';
+    if (n.includes('bose') || n.includes('audio')) return '/Image/bose s1 pro.jpeg';
+    if (n.includes('canon') || n.includes('r5')) return '/Image/canon_6536c012_eos_r5_mark_ii_1841173.jpg';
+    if (n.includes('hdmi') || n.includes('cable')) return '/Image/hmi cable 10ft.jpg';
+    if (n.includes('sony') || n.includes('a7')) return '/Image/sony a7 iv.jpg';
+    if (n.includes('usb') || n.includes('hub')) return '/Image/usb c hub.jpg';
+    if (n.includes('projector') || n.includes('epson')) return '/Image/esponpro.jpg';
+    if (n.includes('dell xps') || n.includes('laptop')) return '/Image/dellxps15.jpg';
+    return '/Image/dellxps15.jpg'; // default placeholder
+};
+
 export default function Catalog() {
     const { addToCart, showToast, globalSearch, setGlobalSearch } = useAppContext()
     const [equipment, setEquipment] = useState([])
@@ -35,8 +49,9 @@ export default function Catalog() {
             type: item.tag.toLowerCase(),
             icon: item.tag === 'LAPTOP' ? 'ph-laptop' : item.tag === 'CAMERAS' ? 'ph-camera' : item.tag === 'PROJECTORS' ? 'ph-projector-screen' : item.tag === 'AUDIO' ? 'ph-speaker-high' : 'ph-monitor',
             quantity: 1,
-            from: 'Feb 28, 2026',
-            to: 'Mar 05, 2026'
+            status: item.status,
+            from: new Date().toISOString().split('T')[0],
+            to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
         })
         alert(`${item.name} added to cart!`)
     }
@@ -150,7 +165,7 @@ export default function Catalog() {
 
                     <div className="filter-group">
                         <h4 className="filter-title">Availability</h4>
-                        {['AVAILABLE', 'ON LOAN', 'MAINTENANCE'].map(avail => (
+                        {['AVAILABLE', 'MAINTENANCE'].map(avail => (
                             <label className="checkbox-label" key={avail}>
                                 <input
                                     type="checkbox"
@@ -174,8 +189,8 @@ export default function Catalog() {
                         <div className="catalog-grid">
                             {filteredEquipment.length > 0 ? filteredEquipment.map((item) => (
                                 <div className="catalog-card" key={item.id}>
-                                    <div className="card-image-box">
-                                        <div className="gray-square"></div>
+                                    <div className="card-image-box" style={{ background: '#fff', padding: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <img src={getImageUrl(item.name)} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                     </div>
                                     <div className="card-content">
                                         <span className="card-tag">{item.tag}</span>

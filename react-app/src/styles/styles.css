@@ -44,6 +44,14 @@
     --primary-light: #1E3A8A;
 }
 
+.dark-theme .form-input,
+.dark-theme textarea.form-input,
+.dark-theme select.form-input {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
 .dark-theme .badge-pending,
 .dark-theme .badge-progress {
     background-color: rgba(217, 119, 6, 0.2);

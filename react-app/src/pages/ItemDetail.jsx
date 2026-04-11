@@ -7,6 +7,8 @@ export default function ItemDetail() {
     const navigate = useNavigate()
     const { addToCart } = useAppContext()
     const [quantity, setQuantity] = useState(1)
+    const [fromDate, setFromDate] = useState(new Date().toISOString().split('T')[0])
+    const [toDate, setToDate] = useState(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0])
 
     const handleAddToCart = () => {
         addToCart({
@@ -15,8 +17,9 @@ export default function ItemDetail() {
             type: 'router',
             icon: 'ph-router',
             quantity,
-            from: 'Feb 28, 2026',
-            to: 'Mar 05, 2026'
+            status: 'AVAILABLE',
+            from: fromDate,
+            to: toDate
         })
         alert("Item added to cart!")
         navigate('/cart')
@@ -85,14 +88,14 @@ export default function ItemDetail() {
                                 <label className="form-label">Borrow Date</label>
                                 <div className="input-icon-wrapper">
                                     <i className="ph ph-calendar-blank"></i>
-                                    <input type="date" className="form-input" style={{ paddingLeft: '38px', paddingTop: '10px' }} />
+                                    <input type="date" className="form-input" style={{ paddingLeft: '38px', paddingTop: '10px' }} value={fromDate} onChange={e => setFromDate(e.target.value)} />
                                 </div>
                             </div>
                             <div className="form-group" style={{ marginBottom: 0 }}>
                                 <label className="form-label">Return Date</label>
                                 <div className="input-icon-wrapper">
                                     <i className="ph ph-calendar-blank"></i>
-                                    <input type="date" className="form-input" style={{ paddingLeft: '38px', paddingTop: '10px' }} />
+                                    <input type="date" className="form-input" style={{ paddingLeft: '38px', paddingTop: '10px' }} value={toDate} onChange={e => setToDate(e.target.value)} />
                                 </div>
                             </div>
                         </div>

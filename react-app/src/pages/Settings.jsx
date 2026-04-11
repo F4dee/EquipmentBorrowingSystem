@@ -10,6 +10,7 @@ export default function Settings() {
     const [formData, setFormData] = useState({
         name: user?.name || '',
         email: user?.email || '',
+        phone: user?.phone || ''
     })
 
     const [notifications, setNotifications] = useState({
@@ -21,7 +22,7 @@ export default function Settings() {
 
     useEffect(() => {
         if (user) {
-            setFormData({ name: user.name, email: user.email })
+            setFormData({ name: user.name, email: user.email, phone: user.phone || '' })
         }
     }, [user])
 

@@ -51,6 +51,15 @@ export function AppProvider({ children }) {
         setCartItems(prev => prev.filter(item => item.id !== id))
     }
 
+    const updateItemDate = (id, field, value) => {
+        setCartItems(prev => prev.map(item => {
+            if (item.id === id) {
+                return { ...item, [field]: value }
+            }
+            return item
+        }))
+    }
+
     const clearCart = () => setCartItems([])
 
     // Toast Notification System
@@ -66,6 +75,7 @@ export function AppProvider({ children }) {
         <AppContext.Provider value={{
             user, login, logout, updateUser,
             cartItems, addToCart, updateQuantity, removeFromCart, clearCart,
+            updateItemDate,
             showToast, isDarkMode, toggleTheme,
             globalSearch, setGlobalSearch
         }}>

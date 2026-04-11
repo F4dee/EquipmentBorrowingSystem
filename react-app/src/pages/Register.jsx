@@ -80,9 +80,7 @@ export default function Register() {
         <div id="page-register" className="page-view active" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div className="auth-container">
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                    <div className="auth-logo">
-                        <i className="ph ph-desktop" style={{ fontSize: '32px', color: 'var(--primary-blue)' }}></i>
-                    </div>
+                    <img src="/Image/Mainlogoborrowing.png" alt="Logo" style={{ width: '64px', height: '64px', objectFit: 'contain', margin: '0 auto 16px', display: 'block' }} />
                     <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>Create an Account</h1>
                     <p style={{ color: 'var(--text-secondary)' }}>Join the Equipment Borrowing System</p>
                 </div>

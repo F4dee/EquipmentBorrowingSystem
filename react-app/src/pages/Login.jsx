@@ -51,7 +51,7 @@ export default function Login({ onLogin }) {
         <div id="page-login" className="page-view active" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div className="auth-box">
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                    <div className="logo-placeholder" style={{ width: '48px', height: '48px', backgroundColor: 'var(--border-color)', margin: '0 auto 16px' }}></div>
+                    <img src="/Image/Mainlogoborrowing.png" alt="Logo" style={{ width: '64px', height: '64px', objectFit: 'contain', margin: '0 auto 16px', display: 'block' }} />
                     <h1 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>Equipment Borrowing</h1>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Login to your account</p>
                 </div>
