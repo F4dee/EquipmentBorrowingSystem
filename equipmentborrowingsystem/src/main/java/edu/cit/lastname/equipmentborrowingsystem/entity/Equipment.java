@@ -24,6 +24,15 @@ public class Equipment {
 
     public Equipment() {}
 
+    // Private constructor used by Builder
+    private Equipment(Builder builder) {
+        this.id = builder.id;
+        this.equipId = builder.equipId;
+        this.name = builder.name;
+        this.tag = builder.tag;
+        this.status = builder.status;
+    }
+
     public Equipment(String equipId, String name, String tag, String status) {
         this.equipId = equipId;
         this.name = name;
@@ -40,4 +49,47 @@ public class Equipment {
     public void setTag(String tag) { this.tag = tag; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    // Manual Builder implementation for the Creational Design Pattern requirement
+    public static class Builder {
+        private Long id;
+        private String equipId;
+        private String name;
+        private String tag;
+        private String status;
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setEquipId(String equipId) {
+            this.equipId = equipId;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setTag(String tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        public Builder setStatus(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Equipment build() {
+            return new Equipment(this);
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
 }
+

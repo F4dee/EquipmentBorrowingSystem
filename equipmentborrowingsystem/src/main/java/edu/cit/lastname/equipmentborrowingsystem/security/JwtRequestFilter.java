@@ -52,8 +52,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                System.out.println("TRACE: Authenticated user: " + username);
+                System.out.println("TRACE: Authorities: " + userDetails.getAuthorities());
+            } else {
+                System.out.println("TRACE: JWT validation failed for user: " + username);
             }
+        } else if (username != null) {
+             System.out.println("TRACE: User already authenticated or context already set for: " + username);
         }
+        
         chain.doFilter(request, response);
     }
 }

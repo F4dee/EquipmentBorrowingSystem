@@ -32,6 +32,9 @@ public class BorrowingRequest {
     @Column(nullable = false)
     private String status; // PENDING, APPROVED, DENIED, BORROWED, RETURNED
 
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
     public BorrowingRequest() {}
 
     public BorrowingRequest(User user, Equipment equipment, LocalDate borrowDate, LocalDate returnDate, String status) {
@@ -41,6 +44,7 @@ public class BorrowingRequest {
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
         this.status = status;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
@@ -57,4 +61,6 @@ public class BorrowingRequest {
     public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }

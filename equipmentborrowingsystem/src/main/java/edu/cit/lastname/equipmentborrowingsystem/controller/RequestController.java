@@ -5,10 +5,10 @@ import edu.cit.lastname.equipmentborrowingsystem.dto.ApiResponse;
 import edu.cit.lastname.equipmentborrowingsystem.dto.CreateRequestDTO;
 import edu.cit.lastname.equipmentborrowingsystem.entity.BorrowingRequest;
 import edu.cit.lastname.equipmentborrowingsystem.entity.Equipment;
-import edu.cit.lastname.equipmentborrowingsystem.entity.User;
 import edu.cit.lastname.equipmentborrowingsystem.repository.EquipmentRepository;
 import edu.cit.lastname.equipmentborrowingsystem.repository.RequestRepository;
-import edu.cit.lastname.equipmentborrowingsystem.repository.UserRepository;
+import edu.cit.lastname.equipmentborrowingsystem.service.facade.BorrowingFacade;
+import edu.cit.lastname.equipmentborrowingsystem.service.notification.BorrowingEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +19,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Refactored controller using Software Design Patterns.
+ * Demonstrated Patterns:
+ * - Structural: FACADE (Coordinates multiple repositories/logic)
+ * - Behavioral: OBSERVER (Notifies listeners of state changes)
+ * - Creational: SINGLETON (Spring-managed Bean)
+ */
 @RestController
 @RequestMapping("/api/v1/requests")
-@CrossOrigin(origins = "http://localhost:5173")
 public class RequestController {
 
     @Autowired
     private RequestRepository requestRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private EquipmentRepository equipmentRepository;
 
-    // Fetch all requests (for Admin)
+    // Structural Pattern: FACADE
+    @Autowired
+    private BorrowingFacade borrowingFacade;
+
+    // Behavioral Pattern: OBSERVER
+    @Autowired
+    private BorrowingEventPublisher eventPublisher;
+
     // Fetch all requests (for Admin)
     @GetMapping
     public ResponseEntity<ApiResponse<Map<String, Object>>> getAllRequests() {
@@ -52,42 +62,26 @@ public class RequestController {
         return ResponseEntity.ok(ApiResponse.success(data));
     }
 
-    // Submit a new request
-    // Submit a new request
+    // Submit a new request - NOW USING FACADE (Refactored)
     @PostMapping
     public ResponseEntity<ApiResponse<Map<String, Object>>> submitRequest(@RequestBody CreateRequestDTO requestDto) {
-        Optional<User> userOpt = userRepository.findById(requestDto.getUserId());
-        Optional<Equipment> equipOpt = equipmentRepository.findById(requestDto.getEquipmentId());
+        try {
+            // Logic moved to Facade to reduce controller bloat
+            BorrowingRequest newRequest = borrowingFacade.processBorrowingRequest(requestDto);
+            
+            // Behavioral Pattern: Observer - Notify about the new pending request
+            eventPublisher.notifyObservers(newRequest, "PENDING");
 
-        if (userOpt.isEmpty() || equipOpt.isEmpty()) {
-            ApiError apiError = new ApiError("DB-001", "Resource not found", "User or Equipment not found");
+            Map<String, Object> data = new HashMap<>();
+            data.put("request", newRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(data));
+        } catch (Exception e) {
+            ApiError apiError = new ApiError("REQ-ERR", "Request processing failed", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(apiError));
         }
-
-        Equipment equip = equipOpt.get();
-        if (!"AVAILABLE".equals(equip.getStatus())) {
-            ApiError apiError = new ApiError("BUSINESS-001", "Insufficient stock", "Equipment is currently not available");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(apiError));
-        }
-
-        BorrowingRequest newRequest = new BorrowingRequest(
-                userOpt.get(),
-                equip,
-                requestDto.getBorrowDate(),
-                requestDto.getReturnDate(),
-                "PENDING"
-        );
-
-        requestRepository.save(newRequest);
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("request", newRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(data));
     }
 
-    // Update request status (Admin action)
-    // Update request status (Admin action - technically belongs in AdminController per SDD
-    // but placed here temporarily to avoid breaking existing flows)
+    // Update request status (Admin action) - NOW USING OBSERVER (Refactored)
     @PatchMapping("/{id}/status")
     public ResponseEntity<ApiResponse<Map<String, Object>>> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> updateData) {
         Optional<BorrowingRequest> reqOpt = requestRepository.findById(id);
@@ -114,7 +108,11 @@ public class RequestController {
         }
         equipmentRepository.save(equip);
 
+        request.setUpdatedAt(java.time.LocalDateTime.now());
         requestRepository.save(request);
+
+        // Behavioral Pattern: Observer
+        eventPublisher.notifyObservers(request, newStatus);
 
         Map<String, Object> data = new HashMap<>();
         data.put("message", "Status updated successfully");

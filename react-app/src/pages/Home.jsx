@@ -7,15 +7,50 @@ export default function Home({ user }) {
     const [tickets, setTickets] = useState([])
 
     useEffect(() => {
-        if (user?.id) {
-            requestApi.getByUser(user.id)
-                .then(res => setRequests(res.requests || []))
-                .catch(console.error)
-            ticketApi.getByUser(user.id)
-                .then(res => setTickets(res.tickets || res || []))
-                .catch(console.error)
+        if (!user) return;
+        
+        const loadData = async () => {
+            try {
+                // Fetch personal data for the tables
+                const [personalRequests, personalTickets] = await Promise.all([
+                    requestApi.getByUser(user.id),
+                    ticketApi.getByUser(user.id)
+                ])
+                setRequests(personalRequests.requests || personalRequests || [])
+                setTickets(personalTickets.tickets || personalTickets || [])
+
+                // If admin, also fetch global stats for the cards
+                if (user.role === 'admin') {
+                    const [globalRequests, globalTickets] = await Promise.all([
+                        requestApi.getAll(),
+                        ticketApi.getAll()
+                    ])
+                    // Use these only for stats calculation
+                    setGlobalData({
+                        requests: globalRequests.requests || globalRequests || [],
+                        tickets: globalTickets.tickets || globalTickets || []
+                    })
+                }
+            } catch (err) {
+                console.error("Home page data load failed", err)
+            }
         }
+        
+        loadData()
     }, [user])
+
+    const [globalData, setGlobalData] = useState({ requests: [], tickets: [] })
+
+    // Stats logic: Show global totals for admins, personal totals for students
+    const statRequests = user?.role === 'admin' ? globalData.requests : requests
+    const statTickets = user?.role === 'admin' ? globalData.tickets : tickets
+
+    const activeRequestsCount = statRequests.filter(r => r.status === 'APPROVED' || r.status === 'BORROWED').length
+    const openTicketsCount = statTickets.filter(t => t.status === 'OPEN').length
+    
+    // Simple filter for "Completed Today"
+    const today = new Date().toISOString().split('T')[0]
+    const completedTodayCount = statRequests.filter(r => r.status === 'RETURNED' && (r.returnDate === today || r.updatedAt?.startsWith(today))).length
     return (
         <div id="page-home" className="page-view active" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div style={{ marginBottom: '32px' }}>
@@ -26,15 +61,15 @@ export default function Home({ user }) {
             <div className="stats-grid">
                 <div className="card stat-card">
                     <p className="stat-label">Active Requests</p>
-                    <h2 className="stat-value">32</h2>
+                    <h2 className="stat-value">{activeRequestsCount}</h2>
                 </div>
                 <div className="card stat-card">
                     <p className="stat-label">Completed Today</p>
-                    <h2 className="stat-value">15</h2>
+                    <h2 className="stat-value">{completedTodayCount}</h2>
                 </div>
                 <div className="card stat-card">
                     <p className="stat-label">Open Tickets</p>
-                    <h2 className="stat-value">8</h2>
+                    <h2 className="stat-value">{openTicketsCount}</h2>
                 </div>
             </div>
 

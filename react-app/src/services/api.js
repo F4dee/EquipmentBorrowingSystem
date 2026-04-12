@@ -68,7 +68,7 @@ export const equipmentApi = {
 // Request workflows (Borrowing Requests)
 export const requestApi = {
     // For Admins
-    getAll: () => fetchApi('/admin/requests/pending', { headers: getAuthHeaders() }),
+    getAll: () => fetchApi('/admin/requests', { headers: getAuthHeaders() }),
 
     // For Users
     getByUser: (userId) => fetchApi(`/requests/user/${userId}`, { headers: getAuthHeaders() }),
@@ -105,4 +105,16 @@ export const ticketApi = {
     
     // For Users
     getByUser: (userId) => fetchApi(`/tickets/user/${userId}`, { headers: getAuthHeaders() }),
+
+    // Admin/Action Overrides
+    updateStatus: (id, status) => fetchApi(`/tickets/${id}/status`, {
+        method: 'PATCH',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ status })
+    }),
+
+    deleteTicket: (id) => fetchApi(`/tickets/${id}`, {
+        method: 'DELETE',
+        headers: getAuthHeaders()
+    }),
 };

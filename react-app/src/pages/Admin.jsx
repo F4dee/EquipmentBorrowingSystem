@@ -1,25 +1,29 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { requestApi, ticketApi } from '../services/api'
+import { requestApi, ticketApi, equipmentApi } from '../services/api'
 import { useAppContext } from '../context/AppContext'
 
 export default function Admin() {
     const { showToast } = useAppContext()
     const [requests, setRequests] = useState([])
     const [tickets, setTickets] = useState([])
+    const [equipment, setEquipment] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate();
 
     const loadRequestsAndTickets = async () => {
         try {
-            const [reqData, ticketData] = await Promise.all([
+            const [reqData, ticketData, equipData] = await Promise.all([
                 requestApi.getAll(),
-                ticketApi.getAll()
+                ticketApi.getAll(),
+                equipmentApi.getAll()
             ])
-            setRequests(reqData.requests || [])
-            setTickets(ticketData.tickets || [])
+            setRequests(reqData.requests || reqData || [])
+            setTickets(ticketData.tickets || ticketData || [])
+            setEquipment(equipData.items || equipData || [])
         } catch (err) {
             console.error("Failed to load data", err)
+            showToast("Failed to load dashboard data: " + err.message, "error")
         } finally {
             setIsLoading(false)
         }
@@ -40,8 +44,43 @@ export default function Admin() {
         }
     }
 
+    const handleResolveTicket = async (id) => {
+        try {
+            await ticketApi.updateStatus(id, 'RESOLVED')
+            showToast(`Ticket TKT-${id} marked as Resolved`)
+            loadRequestsAndTickets()
+        } catch (err) {
+            showToast("Failed to resolve ticket: " + err.message, "error")
+        }
+    }
+
+    const handleCloseTicket = async (id) => {
+        try {
+            await ticketApi.updateStatus(id, 'CLOSED')
+            showToast(`Ticket TKT-${id} marked as Closed`)
+            loadRequestsAndTickets()
+        } catch (err) {
+            showToast("Failed to close ticket: " + err.message, "error")
+        }
+    }
+
+    const handleDeleteTicket = async (id) => {
+        if (!window.confirm("Are you sure you want to permanently delete this ticket?")) return;
+        try {
+            await ticketApi.deleteTicket(id)
+            showToast(`Ticket TKT-${id} deleted successfully`)
+            loadRequestsAndTickets()
+        } catch (err) {
+            showToast("Failed to delete ticket: " + err.message, "error")
+        }
+    }
+
     const pendingCount = requests.filter(r => r.status === 'PENDING').length
     const activeCount = requests.filter(r => r.status === 'APPROVED' || r.status === 'BORROWED').length
+    const completedToday = requests.filter(r => 
+        r.status === 'RETURNED' && 
+        r.updatedAt && new Date(r.updatedAt).toDateString() === new Date().toDateString()
+    ).length
 
     const downloadCSV = (dataList, filename, headers, rowMapper) => {
         if (!dataList) return showToast("No data available to export", "error");
@@ -89,7 +128,7 @@ export default function Admin() {
             <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
                 <div className="card stat-card">
                     <p className="stat-label">Total Equipment</p>
-                    <h2 className="stat-value">156</h2>
+                    <h2 className="stat-value">{isLoading ? '-' : equipment.length}</h2>
                 </div>
                 <div className="card stat-card">
                     <p className="stat-label">Pending Requests</p>
@@ -98,6 +137,10 @@ export default function Admin() {
                 <div className="card stat-card">
                     <p className="stat-label">Active Loans</p>
                     <h2 className="stat-value">{isLoading ? '-' : activeCount}</h2>
+                </div>
+                <div className="card stat-card">
+                    <p className="stat-label">Completed Today</p>
+                    <h2 className="stat-value">{isLoading ? '-' : completedToday}</h2>
                 </div>
                 <div className="card stat-card">
                     <p className="stat-label">Open Tickets</p>
@@ -111,10 +154,11 @@ export default function Admin() {
                 <button className="btn btn-outline" onClick={exportTickets}><i className="ph ph-download-simple"></i> Export Data (Tickets)</button>
             </div>
 
-            <div className="dashboard-grid">
+            <div className="dashboard-sections" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-                    <div className="card-header-inner">
+                    <div className="card-header-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h3 className="card-title">Recent Requests</h3>
+                        <Link to="/requests" className="view-all">View All</Link>
                     </div>
                     <table className="data-table">
                         <thead>
@@ -163,14 +207,16 @@ export default function Admin() {
                     </table>
                 </div>
 
-                <div className="card" style={{ padding: 0, overflow: 'hidden', marginTop: '24px' }}>
-                    <div className="card-header-inner">
+                <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+                    <div className="card-header-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h3 className="card-title">Recent Tickets</h3>
+                        <Link to="/tickets" className="view-all">View All</Link>
                     </div>
                     <table className="data-table">
                         <thead>
                             <tr>
                                 <th>Ticket #</th>
+                                <th>Student</th>
                                 <th>Priority</th>
                                 <th>Description</th>
                                 <th>Location</th>
@@ -186,15 +232,26 @@ export default function Admin() {
                             ) : tickets.length > 0 ? tickets.slice().reverse().map(ticket => (
                                 <tr key={ticket.id}>
                                     <td style={{ fontWeight: 600 }}>TKT-{ticket.id}</td>
+                                    <td>{ticket.user?.name || 'Unknown Student'}</td>
                                     <td><span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#D97706', fontSize: '12px', fontWeight: 600 }}><i className="ph-fill ph-warning-circle"></i> STANDARD</span></td>
                                     <td>{ticket.description}</td>
                                     <td style={{ color: 'var(--text-secondary)' }}>{ticket.labLocation} - {ticket.pcNumber}</td>
                                     <td><span className={`status-badge badge-${ticket.status.toLowerCase()}`}>{ticket.status}</span></td>
-                                    <td style={{ textAlign: 'right' }}><button className="btn btn-outline" style={{ padding: '6px 16px', fontSize: '13px' }}>View</button></td>
+                                    <td style={{ textAlign: 'right' }}>
+                                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                                            {ticket.status !== 'RESOLVED' && ticket.status !== 'CLOSED' && (
+                                                <>
+                                                    <button className="btn btn-outline" onClick={() => handleResolveTicket(ticket.id)} style={{ padding: '6px 12px', fontSize: '13px', color: 'var(--success-green)', borderColor: 'var(--success-green)' }}><i className="ph ph-check"></i> Resolve</button>
+                                                    <button className="btn btn-outline" onClick={() => handleCloseTicket(ticket.id)} style={{ padding: '6px 12px', fontSize: '13px', color: 'var(--text-secondary)', borderColor: 'var(--border-color)' }}><i className="ph ph-x"></i> Close</button>
+                                                </>
+                                            )}
+                                            <button className="btn btn-outline" onClick={() => handleDeleteTicket(ticket.id)} style={{ padding: '6px 12px', fontSize: '13px', color: 'var(--error-red)', borderColor: 'var(--error-red)' }}><i className="ph ph-trash"></i> Delete</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             )) : (
                                 <tr>
-                                    <td colSpan="6" style={{ textAlign: 'center', padding: '24px' }}>No tickets found</td>
+                                    <td colSpan="7" style={{ textAlign: 'center', padding: '24px' }}>No tickets found</td>
                                 </tr>
                             )}
                         </tbody>
