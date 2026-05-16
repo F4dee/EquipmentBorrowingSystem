@@ -3768,7 +3768,10 @@ string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
 string clear_text_end_icon_content_description
+string desc_email_input
+string desc_password_input
 string email
+string email_label
 string error_a11y_label
 string error_icon_content_description
 string error_invalid_email
@@ -3779,11 +3782,13 @@ string error_registration
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string forgot_password
 string have_account
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
 string login
+string login_subtitle
 string m3_ref_typeface_brand_medium
 string m3_ref_typeface_brand_regular
 string m3_ref_typeface_plain_medium
@@ -3885,7 +3890,9 @@ string mtrl_timepicker_cancel
 string mtrl_timepicker_confirm
 string name
 string no_account
+string no_account_signup
 string password
+string password_label
 string password_toggle_content_description
 string path_password_eye
 string path_password_eye_mask_strike_through

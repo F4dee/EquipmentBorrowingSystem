@@ -54,12 +54,12 @@ class LoginActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
 
         val request = LoginRequest(email, password)
-        RetrofitClient.instance.login(request).enqueue(object : Callback<AuthResponse> {
+        RetrofitClient.authService.login(request).enqueue(object : Callback<AuthResponse> {
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful) {
                     binding.tvError.visibility = View.GONE
-                    startActivity(Intent(this@LoginActivity, edu.cit.lastname.equipmentborrowingsystem.ui.dashboard.DashboardActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, edu.cit.lastname.equipmentborrowingsystem.MainActivity::class.java))
                     finish()
                 } else {
                     binding.tvError.text = getString(R.string.error_login)

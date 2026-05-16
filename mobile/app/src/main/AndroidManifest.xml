@@ -19,10 +19,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name=".features.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
+            android:name=".MainActivity"
             android:exported="false" />
     </application>
 

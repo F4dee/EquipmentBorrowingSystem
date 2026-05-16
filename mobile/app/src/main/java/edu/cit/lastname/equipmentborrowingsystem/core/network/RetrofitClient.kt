@@ -18,12 +18,19 @@ object RetrofitClient {
         .addInterceptor(logging)
         .build()
 
-    val instance: AuthService by lazy {
-        val retrofit = Retrofit.Builder()
+    val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+    }
+
+    val authService: AuthService by lazy {
         retrofit.create(AuthService::class.java)
+    }
+
+    val equipmentService: edu.cit.lastname.equipmentborrowingsystem.features.equipment.EquipmentService by lazy {
+        retrofit.create(edu.cit.lastname.equipmentborrowingsystem.features.equipment.EquipmentService::class.java)
     }
 }

@@ -13,4 +13,11 @@
     <string name="success_registration">Registration successful! Please login.</string>
     <string name="error_registration">Registration failed. Please try again.</string>
     <string name="error_login">Invalid email or password</string>
+    <string name="login_subtitle">Login to your account</string>
+    <string name="email_label">EMAIL</string>
+    <string name="password_label">PASSWORD</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="no_account_signup">Don\'t have an account? Sign Up</string>
+    <string name="desc_email_input">Email input field</string>
+    <string name="desc_password_input">Password input field</string>
 </resources>
