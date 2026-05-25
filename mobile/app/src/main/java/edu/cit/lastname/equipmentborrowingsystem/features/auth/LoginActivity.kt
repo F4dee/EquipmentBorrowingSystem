@@ -1,0 +1,97 @@
+package edu.cit.lastname.equipmentborrowingsystem.features.auth
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import edu.cit.lastname.equipmentborrowingsystem.R
+import edu.cit.lastname.equipmentborrowingsystem.core.network.RetrofitClient
+import edu.cit.lastname.equipmentborrowingsystem.features.auth.AuthResponse
+import edu.cit.lastname.equipmentborrowingsystem.features.auth.LoginRequest
+import edu.cit.lastname.equipmentborrowingsystem.databinding.ActivityLoginBinding
+import edu.cit.lastname.equipmentborrowingsystem.features.auth.RegisterActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            performLogin()
+        }
+
+        binding.tvNoAccount.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+    }
+
+    private fun performLogin() {
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString().trim()
+
+        if (email.isEmpty()) {
+            binding.tilEmail.error = getString(R.string.error_invalid_email)
+            return
+        }
+        binding.tilEmail.error = null
+
+        if (password.isEmpty()) {
+            binding.tilPassword.error = "Password cannot be empty"
+            return
+        }
+        binding.tilPassword.error = null
+
+        binding.tvError.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+
+        val request = LoginRequest(email, password)
+        RetrofitClient.authService.login(request).enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+                binding.progressBar.visibility = View.GONE
+                if (response.isSuccessful && response.body() != null) {
+                    binding.tvError.visibility = View.GONE
+                    
+                    val dataMap = response.body()?.data
+                    val userMap = dataMap?.get("user") as? Map<*, *>
+                    val token = dataMap?.get("accessToken") as? String
+                    
+                    if (token != null) {
+                        RetrofitClient.authToken = token
+                    }
+                    
+                    if (userMap != null) {
+                        val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            // Safely extract values from the map
+                            putLong("userId", (userMap["id"] as? Double)?.toLong() ?: (userMap["id"] as? Int)?.toLong() ?: -1L)
+                            putString("userName", userMap["fullName"] as? String ?: "")
+                            putString("userEmail", userMap["email"] as? String ?: "")
+                            putString("userRole", userMap["role"] as? String ?: "")
+                            if (token != null) putString("authToken", token)
+                            apply()
+                        }
+                    }
+
+                    startActivity(Intent(this@LoginActivity, edu.cit.lastname.equipmentborrowingsystem.MainActivity::class.java))
+                    finish()
+                } else {
+                    binding.tvError.text = getString(R.string.error_login)
+                    binding.tvError.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                binding.progressBar.visibility = View.GONE
+                binding.tvError.text = t.message ?: "Network error"
+                binding.tvError.visibility = View.VISIBLE
+            }
+        })
+    }
+}

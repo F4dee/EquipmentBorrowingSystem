@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_blue">#1A2530</color>
+    <color name="primary_hover">#111822</color>
+    <color name="primary_light">#F1F4F9</color>
+    <color name="bg_page">#F4F6F8</color>
+    <color name="bg_card">#FFFFFF</color>
+    
+    <color name="text_primary">#1A2530</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_muted">#9CA3AF</color>
+    <color name="border_color">#D1D5DB</color>
+    <color name="error_red">#EF4444</color>
+    <color name="error_bg">#FEE2E2</color>
+    
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
